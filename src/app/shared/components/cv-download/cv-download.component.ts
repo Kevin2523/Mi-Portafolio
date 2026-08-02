@@ -1,0 +1,331 @@
+import { Component, signal, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+import { UiStateService } from '../../../core/services/ui-state.service';
+
+pdfMake.vfs = pdfFonts;
+
+@Component({
+  selector: 'app-cv-download',
+  standalone: true,
+  imports: [CommonModule],
+  template: `
+    <button type="button" (click)="downloadCV()" [disabled]="isGenerating()"
+      class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900/50 text-slate-700 dark:text-slate-300 font-semibold text-sm hover:border-indigo-300 dark:hover:border-indigo-500/50 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
+      [class.opacity-50]="isGenerating()" [class.cursor-not-allowed]="isGenerating()">
+      @if (isGenerating()) {
+        <svg class="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.3730 0 0 5.373 0 12h4z"/>
+        </svg>
+        <span>Generando...</span>
+      } @else {
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+        </svg>
+        <span>Ver CV</span>
+      }
+    </button>
+  `
+})
+export class CvDownloadComponent {
+  private uiState = inject(UiStateService);
+  readonly isGenerating = signal(false);
+
+  downloadCV(): void {
+    this.isGenerating.set(true);
+    setTimeout(() => {
+      try {
+        const doc = pdfMake.createPdf(this.doc());
+        doc.open();
+      } catch (e) { console.error(e); }
+      finally { this.isGenerating.set(false); }
+    }, 100);
+  }
+
+  private doc(): any {
+    // Colors - black/white only
+    const BLACK = '#000000';
+    const DARK_GRAY = '#333333';
+    const MEDIUM_GRAY = '#666666';
+    const LIGHT_GRAY = '#999999';
+    const WHITE = '#ffffff';
+
+    return {
+      pageSize: 'LETTER',
+      pageMargins: [40, 40, 40, 40],
+      defaultStyle: {
+        font: 'Roboto',
+        fontSize: 9,
+        color: DARK_GRAY,
+        lineHeight: 1.15
+      },
+      content: [
+        // ===== NAME =====
+        {
+          text: 'KEVIN JHAIR MENA GOODING',
+          style: 'name',
+          alignment: 'center',
+          margin: [0, 0, 0, 4]
+        },
+        // ===== CONTACT LINE =====
+        {
+          text: [
+            'Panamá',
+            { text: '  •  ', color: LIGHT_GRAY },
+            'kjmg2325@gmail.com',
+            { text: '  •  ', color: LIGHT_GRAY },
+            '+507 6032-6810',
+            { text: '  •  ', color: LIGHT_GRAY },
+            'linkedin.com/in/kevin-mena-78b230348',
+            { text: '  •  ', color: LIGHT_GRAY },
+            'github.com/Kevin2523'
+          ],
+          style: 'contact',
+          alignment: 'center',
+          margin: [0, 0, 0, 10]
+        },
+
+        // ===== EDUCACIÓN =====
+        { text: 'EDUCACIÓN', style: 'section' },
+        this.eduEntry(
+          'Universidad Tecnológica de Panamá',
+          'Panamá',
+          'Licenciatura en Desarrollo y Gestión de Software',
+          '2023 – 2026'
+        ),
+
+        // ===== EXPERIENCIA =====
+        { text: 'EXPERIENCIA PROFESIONAL', style: 'section' },
+
+        // Rosero One
+        this.expEntry(
+          'Práctica Profesional',
+          'Rosero One',
+          'Panamá',
+          'Inicio 2026',
+          [
+            'Práctica profesional de dos meses en la empresa Rosero One, donde apliqué conocimientos de ciberseguridad e inteligencia artificial en un entorno laboral real.',
+            'Auditorías, monitoreo y herramientas de seguridad informática.'
+          ]
+        ),
+
+        // Freelance
+        this.expEntry(
+          'Desarrollador Web Freelance',
+          'Independiente',
+          'Panamá',
+          '2026 – Presente',
+          [
+            'Desarrollo de aplicaciones web a medida para clientes locales utilizando Angular, PHP y MySQL.',
+            'Implementación de sistemas de seguridad siguiendo estándares OWASP y buenas prácticas de desarrollo.',
+            'Gestión completa de proyectos: desde la recolección de requerimientos hasta el despliegue.'
+          ]
+        ),
+
+        // ===== PROYECTOS =====
+        { text: 'PROYECTOS DESTACADOS', style: 'section' },
+
+        // NextAudit AI
+        this.projectEntry(
+          'NextAudit AI — Sistema de Auditorías con IA',
+          [
+            'Plataforma SaaS para auditorías automatizadas utilizando Angular 21 + NestJS + PostgreSQL.',
+            'Integración de autenticación biométrica (WebAuthn) y despliegue con Docker + GitHub Actions.',
+            'Sistema de roles y permisos para gestión de equipos de auditoría.'
+          ]
+        ),
+
+        // Jornada Industrial
+        this.projectEntry(
+          'Jornada Industrial — Plataforma de Publicaciones',
+          [
+            'Sitio web dinámico con WordPress + PHP + Lazy Blocks para gestión de contenido empresarial.',
+            'Personalización de temas y desarrollo de componentes personalizados con CSS y JavaScript.'
+          ]
+        ),
+
+        // La Casa del Jean
+        this.projectEntry(
+          'La Casa del Jean — Tienda E-commerce',
+          [
+            'Tienda en línea con Angular 21 + PHP + MySQL para gestión de productos y pedidos.',
+            'Panel de administración para control de inventario, pedidos y clientes.'
+          ]
+        ),
+
+        // ===== HABILIDADES =====
+        { text: 'HABILIDADES', style: 'section' },
+        {
+          columns: [
+            {
+              width: '*',
+              stack: [
+                this.skillCategory('Frontend', 'Angular 21, Tailwind CSS, TypeScript, HTML5, CSS3, JavaScript'),
+                this.skillCategory('Backend', 'NestJS, PHP, MySQL, Node.js, REST APIs'),
+                this.skillCategory('Herramientas', 'Git/GitHub, Docker, Linux, VS Code')
+              ]
+            },
+            {
+              width: '*',
+              stack: [
+                this.skillCategory('Seguridad', 'OWASP, NIST, Trivy, SonarQube, WebAuthn'),
+                this.skillCategory('Otros', 'Publicidad Digital, Google Ads, Power BI, n8n'),
+                this.skillCategory('Idiomas', 'Español (nativo), Inglés (intermedio)')
+              ]
+            }
+          ],
+          margin: [0, 2, 0, 6]
+        },
+
+        // ===== CERTIFICACIONES =====
+        { text: 'CERTIFICACIONES', style: 'section' },
+        {
+          ul: [
+            this.certItem('Google Ads — Certificación en Publicidad Digital'),
+            this.certItem('Seguridad de Software — OWASP Top 10'),
+            this.certItem('Análisis de Datos — Power BI')
+          ],
+          margin: [10, 0, 0, 0]
+        }
+      ],
+      styles: {
+        name: {
+          fontSize: 16,
+          bold: true,
+          color: BLACK
+        },
+        contact: {
+          fontSize: 8,
+          color: MEDIUM_GRAY
+        },
+        section: {
+          fontSize: 10,
+          bold: true,
+          color: BLACK,
+          margin: [0, 6, 0, 3],
+          decoration: 'underline',
+          decorationColor: BLACK,
+          decorationStyle: 'solid'
+        },
+        jobTitle: {
+          fontSize: 9,
+          bold: true,
+          color: DARK_GRAY
+        },
+        company: {
+          fontSize: 9,
+          italics: true,
+          color: MEDIUM_GRAY
+        },
+        date: {
+          fontSize: 8,
+          color: LIGHT_GRAY
+        },
+        bullet: {
+          fontSize: 8,
+          color: DARK_GRAY,
+          margin: [0, 1, 0, 1]
+        },
+        categoryTitle: {
+          fontSize: 8,
+          bold: true,
+          color: DARK_GRAY
+        },
+        categoryContent: {
+          fontSize: 8,
+          color: MEDIUM_GRAY,
+          margin: [0, 0, 0, 3]
+        },
+        certItem: {
+          fontSize: 8,
+          color: DARK_GRAY,
+          margin: [0, 1, 0, 1]
+        }
+      }
+    };
+  }
+
+  // ===== Helper methods =====
+
+  private eduEntry(school: string, location: string, degree: string, dates: string): any {
+    return {
+      columns: [
+        {
+          width: '*',
+          stack: [
+            { text: school, style: 'jobTitle' },
+            { text: degree, style: 'company', margin: [0, 1, 0, 0] }
+          ]
+        },
+        {
+          width: 'auto',
+          stack: [
+            { text: location, style: 'date', alignment: 'right' },
+            { text: dates, style: 'date', alignment: 'right', margin: [0, 1, 0, 0] }
+          ]
+        }
+      ],
+      margin: [0, 0, 0, 3]
+    };
+  }
+
+  private expEntry(title: string, company: string, location: string, dates: string, bullets: string[]): any {
+    return {
+      columns: [
+        {
+          width: '*',
+          stack: [
+            { text: title, style: 'jobTitle' },
+            { text: company, style: 'company', margin: [0, 1, 0, 0] },
+            ...bullets.map(b => ({
+              text: [
+                { text: '• ', fontSize: 8 },
+                { text: b, style: 'bullet' }
+              ],
+              margin: [10, 1, 0, 0]
+            }))
+          ]
+        },
+        {
+          width: 'auto',
+          stack: [
+            { text: location, style: 'date', alignment: 'right' },
+            { text: dates, style: 'date', alignment: 'right', margin: [0, 1, 0, 0] }
+          ]
+        }
+      ],
+      margin: [0, 0, 0, 4]
+    };
+  }
+
+  private projectEntry(title: string, bullets: string[]): any {
+    return {
+      stack: [
+        { text: title, style: 'jobTitle', margin: [0, 0, 0, 1] },
+        ...bullets.map(b => ({
+          text: [
+            { text: '• ', fontSize: 8 },
+            { text: b, style: 'bullet' }
+          ],
+          margin: [10, 1, 0, 0]
+        }))
+      ],
+      margin: [0, 0, 0, 3]
+    };
+  }
+
+  private skillCategory(title: string, content: string): any {
+    return {
+      stack: [
+        { text: title + ': ', style: 'categoryTitle' },
+        { text: content, style: 'categoryContent' }
+      ]
+    };
+  }
+
+  private certItem(text: string): any {
+    return { text: '• ' + text, style: 'certItem' };
+  }
+}

@@ -1,0 +1,19 @@
+# robots.txt for Kevin Mena Portfolio
+# Generated automatically - do not edit manually
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://kevinmena.dev/sitemap.xml
+
+# Host
+Host: https://kevinmena.dev
+
+# Crawl-delay (optional, be respectful)
+Crawl-delay: 10
+
+# Disallow admin/private areas (none in this SPA)
+# Disallow: /admin/
+# Disallow: /api/
+# Disallow: /private/
