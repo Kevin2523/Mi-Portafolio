@@ -71,6 +71,22 @@ export class ServicesComponent {
 
   services = [
     {
+      title: 'Consultoría de TI',
+      description: 'Asesoría técnica personalizada para empresas y emprendedores. Analizo tus necesidades y te propongo soluciones tecnológicas que optimizan procesos y reducen costos.',
+      includes: ['Análisis de requerimientos', 'Arquitectura de software', 'Optimización de procesos', 'Selección tecnológica'],
+      icon: this.getIconSafe('Consultoría'),
+      iconClass: 'bg-indigo-50 dark:bg-indigo-400/10 text-indigo-500 dark:text-indigo-400 border-indigo-200 dark:border-indigo-400/30',
+      result: 'Soluciones a medida · Reducción de costos · Eficiencia operativa'
+    },
+    {
+      title: 'Soporte Técnico de Redes',
+      description: 'Mantenimiento, configuración y solución de problemas de redes. Conectividad estable y segura para tu negocio o institución.',
+      includes: ['Configuración de redes', 'Diagnóstico de fallas', 'Mantenimiento preventivo', 'Seguridad de red'],
+      icon: this.getIconSafe('Redes'),
+      iconClass: 'bg-cyan-50 dark:bg-cyan-400/10 text-cyan-500 dark:text-cyan-400 border-cyan-200 dark:border-cyan-400/30',
+      result: 'Conectividad estable · Soporte rápido · Redes seguras'
+    },
+    {
       title: 'Desarrollo Web',
       description: 'Sitios web completos, landing pages y e-commerce que convierten. Desde una página institucional hasta una tienda online con panel de administración.',
       includes: ['Angular', 'WordPress', 'PHP', 'MySQL', 'Tailwind CSS'],
@@ -79,44 +95,60 @@ export class ServicesComponent {
       result: 'Sitios rápidos · SEO optimizado · Responsive-first'
     },
     {
-      title: 'Publicidad Digital',
-      description: 'Llevo tráfico de Google directamente a tu página. Las personas buscan lo que ofreces, hacen click y te contactan por WhatsApp.',
-      includes: ['Google Ads', 'Google Analytics 4', 'Landing Pages', 'Copywriting', 'CRO'],
-      icon: this.getIconSafe('Google Ads'),
-      iconClass: 'bg-indigo-50 dark:bg-indigo-400/10 text-indigo-500 dark:text-indigo-400 border-indigo-200 dark:border-indigo-400/30',
-      result: 'CTR 6.8% · CPA -35% · 92% retención clientes'
+      title: 'Desarrollo de Aplicaciones',
+      description: 'Aplicaciones web completas con panel de administración, autenticación, base de datos y funcionalidades a medida para tu negocio.',
+      includes: ['Angular', 'NestJS', 'Node.js', 'PostgreSQL', 'REST API'],
+      icon: this.getIconSafe('Aplicaciones'),
+      iconClass: 'bg-purple-50 dark:bg-purple-400/10 text-purple-500 dark:text-purple-400 border-purple-200 dark:border-purple-400/30',
+      result: 'Apps escalables · Panel admin · Autenticación segura'
     },
     {
-      title: 'Análisis de Datos',
-      description: 'Transformo datos crudos en dashboards interactivos que cuentan una historia. Ventas, campañas, inventario — lo que necesitas para tomar mejores decisiones.',
-      includes: ['Power BI', 'Looker Studio', 'Google Analytics 4', 'SQL', 'Python'],
-      icon: this.getIconSafe('PowerBI'),
-      iconClass: 'bg-yellow-50 dark:bg-yellow-400/10 text-yellow-500 dark:text-yellow-400 border-yellow-200 dark:border-yellow-400/30',
-      result: 'Dashboards automatizados · Decisiones basadas en datos'
+      title: 'Software Personalizado',
+      description: 'Desarrollo de software a medida que se adapta exactamente a tus necesidades. Sin soluciones genéricas, todo hecho para tu caso de uso específico.',
+      includes: ['Análisis de requerimientos', 'Desarrollo full-stack', 'Testing', 'Despliegue y soporte'],
+      icon: this.getIconSafe('Software'),
+      iconClass: 'bg-blue-50 dark:bg-blue-400/10 text-blue-500 dark:text-blue-400 border-blue-200 dark:border-blue-400/30',
+      result: '100% personalizado · Escalable · Soporte continuo'
     },
     {
-      title: 'Automatización con IA',
-      description: 'Automatizo procesos repetitivos usando inteligencia artificial. Desde chatbots que responden clientes hasta flujos de trabajo que se ejecutan solos.',
-      includes: ['n8n', 'Flowise', 'Ollama', 'Python'],
-      icon: this.getIconSafe('n8n'),
-      iconClass: 'bg-cyan-50 dark:bg-cyan-400/10 text-cyan-500 dark:text-cyan-400 border-cyan-200 dark:border-cyan-400/30',
-      result: 'Ahorro de tiempo · Reducción de errores · Escalabilidad'
-    },
-    {
-      title: 'Seguridad de Software',
-      description: 'Audito y protejo aplicaciones web contra vulnerabilidades. Identifico riesgos antes de que los encuentren los atacantes, bajo estándares OWASP y NIST.',
-      includes: ['OWASP', 'NIST', 'Trivy', 'SonarQube'],
-      icon: this.getIconSafe('SonarQube'),
-      iconClass: 'bg-pink-50 dark:bg-pink-400/10 text-pink-500 dark:text-pink-400 border-pink-200 dark:border-pink-400/30',
-      result: 'Vulnerabilidades detectadas · Cumplimiento normativo'
+      title: 'Desarrollo de Bases de Datos',
+      description: 'Diseño, implementación y optimización de bases de datos relacionales y no relacionales. Estructuras eficientes que crecen con tu negocio.',
+      includes: ['MySQL', 'PostgreSQL', 'MongoDB', 'Modelado de datos', 'Optimización de consultas'],
+      icon: this.getIconSafe('Base de Datos'),
+      iconClass: 'bg-amber-50 dark:bg-amber-400/10 text-amber-500 dark:text-amber-400 border-amber-200 dark:border-amber-400/30',
+      result: 'Bases optimizadas · Consultas rápidas · Integridad de datos'
     },
     {
       title: 'Desarrollo Móvil',
       description: 'Aplicaciones nativas Android con Kotlin para negocios que necesitan una app funcional, moderna y que sus clientes quieran usar.',
       includes: ['Kotlin', 'Android Studio', 'REST API', 'Firebase'],
-      icon: this.getIconSafe('Java'),
+      icon: this.getIconSafe('Móvil'),
       iconClass: 'bg-orange-50 dark:bg-orange-400/10 text-orange-500 dark:text-orange-400 border-orange-200 dark:border-orange-400/30',
       result: 'Apps nativas · UX nativa · Play Store ready'
+    },
+    {
+      title: 'Desarrollo de SaaS',
+      description: 'Plataformas SaaS completas con autenticación, suscripciones, multi-tenant y panel de administración. Todo lo que necesitas para tu producto digital.',
+      includes: ['Angular', 'NestJS', 'PostgreSQL', 'Docker', 'CI/CD', 'Autenticación'],
+      icon: this.getIconSafe('SaaS'),
+      iconClass: 'bg-rose-50 dark:bg-rose-400/10 text-rose-500 dark:text-rose-400 border-rose-200 dark:border-rose-400/30',
+      result: 'Multi-tenant · Suscripciones · Escalable'
+    },
+    {
+      title: 'Gestión en la Nube',
+      description: 'Configuración y administración de servidores en la nube. Infraestructura segura, escalable y optimizada para reducir costos operativos.',
+      includes: ['AWS', 'Google Cloud', 'Azure', 'Docker', 'Linux'],
+      icon: this.getIconSafe('Nube'),
+      iconClass: 'bg-teal-50 dark:bg-teal-400/10 text-teal-500 dark:text-teal-400 border-teal-200 dark:border-teal-400/30',
+      result: 'Infraestructura segura · Escalable · Costos optimizados'
+    },
+    {
+      title: 'Apps en la Nube',
+      description: 'Desarrollo de aplicaciones cloud-native diseñadas para la nube desde el inicio. Microservicios, contenedores y despliegue continuo.',
+      includes: ['Docker', 'Kubernetes', 'CI/CD', 'Microservicios', 'Serverless'],
+      icon: this.getIconSafe('Cloud Native'),
+      iconClass: 'bg-violet-50 dark:bg-violet-400/10 text-violet-500 dark:text-violet-400 border-violet-200 dark:border-violet-400/30',
+      result: 'Cloud-native · Microservicios · Despliegue continuo'
     }
   ];
 
