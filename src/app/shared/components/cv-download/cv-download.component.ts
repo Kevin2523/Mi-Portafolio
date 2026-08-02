@@ -1,10 +1,10 @@
 import { Component, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import pdfMake from 'pdfmake/build/pdfmake';
-import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { UiStateService } from '../../../core/services/ui-state.service';
 
-pdfMake.vfs = pdfFonts;
+// pdfmake imports - using dynamic import for production compatibility
+let pdfMake: any;
+let pdfFonts: any;
 
 @Component({
   selector: 'app-cv-download',
@@ -32,16 +32,32 @@ pdfMake.vfs = pdfFonts;
 export class CvDownloadComponent {
   private uiState = inject(UiStateService);
   readonly isGenerating = signal(false);
+  private pdfMakeLoaded = false;
 
-  downloadCV(): void {
+  private async loadPdfMake(): Promise<void> {
+    if (this.pdfMakeLoaded) return;
+    
+    const pdfMakeModule = await import('pdfmake/build/pdfmake');
+    const pdfFontsModule = await import('pdfmake/build/vfs_fonts');
+    
+    pdfMake = pdfMakeModule.default;
+    pdfFonts = pdfFontsModule.default;
+    
+    pdfMake.vfs = pdfFonts;
+    this.pdfMakeLoaded = true;
+  }
+
+  async downloadCV(): Promise<void> {
     this.isGenerating.set(true);
-    setTimeout(() => {
-      try {
-        const doc = pdfMake.createPdf(this.doc());
-        doc.open();
-      } catch (e) { console.error(e); }
-      finally { this.isGenerating.set(false); }
-    }, 100);
+    try {
+      await this.loadPdfMake();
+      const doc = pdfMake.createPdf(this.doc());
+      doc.open();
+    } catch (e) { 
+      console.error('Error generating CV:', e); 
+    } finally { 
+      this.isGenerating.set(false); 
+    }
   }
 
   private doc(): any {
@@ -113,12 +129,12 @@ export class CvDownloadComponent {
 
         // Freelance
         this.expEntry(
-          'Desarrollador Web Freelance',
+          'Desarrollador Freelance',
           'Independiente',
           'Panamá',
           '2026 – Presente',
           [
-            'Desarrollo de aplicaciones web a medida para clientes locales utilizando Angular, PHP y MySQL.',
+            'Desarrollo de todo tipo de aplicaciones para clientes locales: web, móviles, automatizaciones y más.',
             'Implementación de sistemas de seguridad siguiendo estándares OWASP y buenas prácticas de desarrollo.',
             'Gestión completa de proyectos: desde la recolección de requerimientos hasta el despliegue.'
           ]
@@ -139,10 +155,10 @@ export class CvDownloadComponent {
 
         // Jornada Industrial
         this.projectEntry(
-          'Jornada Industrial — Plataforma de Publicaciones',
+          'Jornada Industrial — Sitio Web Institucional',
           [
-            'Sitio web dinámico con WordPress + PHP + Lazy Blocks para gestión de contenido empresarial.',
-            'Personalización de temas y desarrollo de componentes personalizados con CSS y JavaScript.'
+            'Desarrollo del sitio web oficial para la Jornada Industrial de UTP Coclé con WordPress.',
+            'Plataforma informativa con agenda dinámica, perfiles de ponentes y registro de participantes.'
           ]
         ),
 
@@ -179,16 +195,6 @@ export class CvDownloadComponent {
           margin: [0, 2, 0, 6]
         },
 
-        // ===== CERTIFICACIONES =====
-        { text: 'CERTIFICACIONES', style: 'section' },
-        {
-          ul: [
-            this.certItem('Google Ads — Certificación en Publicidad Digital'),
-            this.certItem('Seguridad de Software — OWASP Top 10'),
-            this.certItem('Análisis de Datos — Power BI')
-          ],
-          margin: [10, 0, 0, 0]
-        }
       ],
       styles: {
         name: {
