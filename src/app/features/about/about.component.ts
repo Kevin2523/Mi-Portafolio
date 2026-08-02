@@ -35,7 +35,7 @@ import { ScrollRevealDirective } from '../../core/services/scroll-animation.serv
               <span class="text-xs font-mono text-slate-500 dark:text-slate-500">Proyectos publicados</span>
             </div>
             <div class="p-4 rounded-xl bg-white dark:bg-cyber-900/60 border border-slate-200 dark:border-slate-800/60">
-              <span class="block text-2xl font-bold text-purple-600 dark:text-purple-400 font-display">+5</span>
+              <span class="block text-2xl font-bold text-purple-600 dark:text-purple-400 font-display">12+</span>
               <span class="text-xs font-mono text-slate-500 dark:text-slate-500">Tecnologías dominadas</span>
             </div>
           </div>

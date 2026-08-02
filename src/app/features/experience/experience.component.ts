@@ -65,7 +65,7 @@ interface ExperienceEntry {
                           }"></div>
 
                         <!-- Card - full width on mobile, 50% on desktop -->
-                                        <div class="w-full md:w-1/2 px-4 md:px-6 relative z-10" [class.md:pl-0]="i % 2 === 0" [class.md:pr-0]="i % 2 !== 0">
+                                        <div class="w-full md:w-1/2 px-4 md:px-8 relative z-10" [class.md:pl-0]="i % 2 === 0" [class.md:pr-0]="i % 2 !== 0">
                                           <div class="rounded-2xl p-5 md:p-6 bg-white dark:bg-cyber-900 border border-slate-200 dark:border-slate-800 shadow-sm shadow-indigo-200/20 dark:shadow-none transition-all duration-300 hover:shadow-md hover:shadow-indigo-200/30 dark:hover:shadow-[0_0_30px_rgba(34,211,238,0.04)] h-full z-10">
                   
                     <div class="flex items-center gap-3 mb-4">

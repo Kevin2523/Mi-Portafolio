@@ -29,11 +29,10 @@ export const KEVIN_PROJECTS: Project[] = [
     shortDescription: 'Plataforma SaaS para auditorías inteligentes de seguridad y cumplimiento con IA. Reduce tiempo de auditoría de semanas a horas, generando reportes ejecutivos claros y accionables.',
     longDescription: 'NextAudit AI es una plataforma SaaS completa que automatiza el proceso de auditoría de seguridad y cumplimiento normativo mediante inteligencia artificial. Permite a gerentes y directivos obtener reportes ejecutivos claros, accionables y libres de jerga técnica, reduciendo el tiempo de auditoría de semanas a horas.\n\nIntegra herramientas de escaneo de seguridad (SAST, DAST, SCA) en un pipeline unificado, genera reportes con IA y implementa autenticación robusta con 2FA y control de acceso basado en roles.\n\nStack: Angular 21, TypeScript, Tailwind CSS, NestJS, Node.js, PostgreSQL, Prisma ORM, SonarQube, Trivy, OWASP ZAP, JWT, RBAC, Docker, GitHub Actions.',
     technologies: [
-      'Angular 21', 'TypeScript', 'Tailwind CSS', 'RxJS', 'Signals',
-      'NestJS', 'Node.js', 'PostgreSQL', 'Prisma ORM',
-      'SonarQube', 'Trivy', 'OWASP ZAP',
-      'JWT', 'RBAC', 'REST API',
-      'Docker', 'GitHub Actions', 'CI/CD'
+      'Angular', 'RxJS', 'Signals',
+      'NestJS', 'Node.js', 'PostgreSQL',
+      'n8n', 'Flowise', 'REST API',
+      'Docker', 'CI/CD'
     ],
     role: 'Full-Stack Developer & Security Architect',
     challenges: [
@@ -68,9 +67,7 @@ export const KEVIN_PROJECTS: Project[] = [
     shortDescription: 'Sitio web institucional oficial para la Jornada Industrial de UTP Coclé. WordPress personalizado con bloques modulares, WCAG 2.1 AA, Lighthouse 98+. Agenda dinámica, streaming en vivo, registro de participantes.',
     longDescription: 'Desarrollo completo del sitio web oficial para la Jornada Industrial de la Universidad Tecnológica de Panamá, sede Coclé. Plataforma informativa accesible para estudiantes, empresas participantes y público general, con agenda dinámica multi-track, perfiles de ponentes, transmisión en vivo integrada y área de registro de participantes.\n\nTema WordPress personalizado desarrollado desde cero con 27 bloques modulares reutilizables. El diseño prioriza accesibilidad WCAG 2.1 AA (certificado), rendimiento (Lighthouse Performance 98+, Accessibility 100, Best Practices 96, SEO 100) y experiencia móvil fluida.\n\nStack: WordPress, PHP, MySQL, Customizer API, Google Fonts, Material Symbols, bloques modulares personalizados.',
     technologies: [
-      'WordPress', 'PHP', 'MySQL', 'CSS', 'HTML',
-      'Customizer API', 'Gutenberg',
-      'WCAG 2.1 AA', 'Lighthouse 98+', 'Google Fonts', 'Material Symbols'
+      'WordPress', 'PHP', 'MySQL', 'CSS', 'HTML'
     ],
     role: 'Lead Developer',
     challenges: [
