@@ -27,9 +27,7 @@ import { PwaInstallPromptComponent } from './shared/components/pwa-install-promp
            
             <!-- Logo -->
             <a href="/" class="flex items-center gap-3 group">
-              <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 dark:from-indigo-500 dark:to-purple-600 flex items-center justify-center font-display font-bold text-sm text-white shadow-sm">
-                KM
-              </div>
+              <img src="/profile.png" alt="Kevin Mena" class="w-9 h-9 rounded-lg object-cover shadow-sm">
               <span class="hidden md:block font-display font-semibold text-sm text-slate-700 dark:text-slate-300 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
                 Kevin Mena
               </span>

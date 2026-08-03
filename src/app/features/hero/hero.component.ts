@@ -83,18 +83,6 @@ import { CvDownloadComponent } from '../../shared/components/cv-download/cv-down
                 </div>
       </div>
 
-      <!-- Right: Profile image -->
-            <div class="flex-1 flex justify-center md:justify-end" appScrollReveal="fade-right" [delay]="300">
-        <div class="relative w-64 h-64 md:w-80 md:h-80">
-          <!-- Image container -->
-          <div class="relative w-full h-full rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700 bg-white dark:bg-cyber-800 shadow-xl shadow-indigo-200/30 dark:shadow-[0_0_60px_rgba(34,211,238,0.06)]">
-            <div class="w-full h-full">
-              <img src="/profile.png" alt="Kevin Mena" class="w-full h-full object-cover transition-transform duration-700 hover:scale-105">
-            </div>
-          </div>
-        </div>
-      </div>
-
     </section>
   `
 })
