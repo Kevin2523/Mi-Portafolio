@@ -4,12 +4,11 @@ import { CommonModule } from '@angular/common';
 import { UiStateService } from './core/services/ui-state.service';
 import { ProjectModalComponent } from './shared/components/project-modal/project-modal.component';
 import { SkipLinkComponent } from './core/services/skip-link.component';
-import { PwaInstallPromptComponent } from './shared/components/pwa-install-prompt/pwa-install-prompt.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, ProjectModalComponent, SkipLinkComponent, PwaInstallPromptComponent],
+  imports: [RouterOutlet, CommonModule, ProjectModalComponent, SkipLinkComponent],
   template: `
     <main [class.dark]="uiState.isDarkMode()">
 
@@ -119,9 +118,6 @@ import { PwaInstallPromptComponent } from './shared/components/pwa-install-promp
         [isOpen]="uiState.isModalOpen()" 
         (closed)="uiState.closeModal()"
       ></app-project-modal>
-
-      <!-- PWA Install Prompt -->
-      <app-pwa-install-prompt></app-pwa-install-prompt>
 
     </main>
   `
