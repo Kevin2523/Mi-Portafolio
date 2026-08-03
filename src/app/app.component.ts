@@ -84,7 +84,7 @@ import { PwaInstallPromptComponent } from './shared/components/pwa-install-promp
                 @for (item of navItems; track item.label) {
                   <a [href]="item.href" 
                      class="px-4 py-3 rounded-lg text-sm text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-500/5 transition-all"
-                     (click)="mobileOpen = false">
+                     (click)="navigateTo(item.href)">
                     {{ item.label }}
                   </a>
                 }
@@ -137,4 +137,20 @@ export class AppComponent {
     { label: 'servicios', href: '/#services' },
     { label: 'contacto', href: '/#contact' },
   ];
+
+  navigateTo(href: string): void {
+    this.mobileOpen = false;
+    
+    if (href.startsWith('/#')) {
+      // Anchor link - scroll to section
+      const sectionId = href.substring(2);
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else if (href === '/') {
+      // Home - scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }
 }
