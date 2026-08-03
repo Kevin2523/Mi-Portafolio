@@ -179,7 +179,7 @@ interface TerminalLine {
                 </p>
               }
               <p class="text-slate-500 dark:text-slate-600 leading-relaxed">
-                $ <input #liveInput type="text" readonly
+                $ <input #liveInput type="text" readonly aria-hidden="true"
                   [value]="liveText()"
                   class="bg-transparent border-none outline-none font-mono text-sm text-slate-600 dark:text-slate-400 w-0 p-0 inline"
                   style="caret-color: transparent;"
@@ -198,32 +198,32 @@ interface TerminalLine {
               
               <!-- Name -->
               <div>
-                <label class="block text-sm font-medium text-indigo-500 dark:text-indigo-400 mb-2">Nombre <span class="text-red-400">*</span></label>
-                <input type="text" name="from_name" [(ngModel)]="formData.name" required
+                <label for="from_name" class="block text-sm font-medium text-indigo-500 dark:text-indigo-400 mb-2">Nombre <span class="text-red-400">*</span></label>
+                <input type="text" id="from_name" name="from_name" [(ngModel)]="formData.name" required
                   placeholder="Tu nombre" class="cyber-input" #nameField
                   (keyup)="updateTerminalPreview()" (focus)="updateTerminalPreview()">
               </div>
 
               <!-- Email -->
               <div>
-                <label class="block text-sm font-medium text-purple-500 dark:text-purple-400 mb-2">Correo electrónico <span class="text-red-400">*</span></label>
-                <input type="email" name="from_email" [(ngModel)]="formData.email" required
+                <label for="from_email" class="block text-sm font-medium text-purple-500 dark:text-purple-400 mb-2">Correo electrónico <span class="text-red-400">*</span></label>
+                <input type="email" id="from_email" name="from_email" [(ngModel)]="formData.email" required
                   placeholder="tu@correo.com" class="cyber-input"
                   (keyup)="updateTerminalPreview()" (focus)="updateTerminalPreview()">
               </div>
 
               <!-- Subject -->
               <div>
-                <label class="block text-sm font-medium text-emerald-500 dark:text-emerald-400 mb-2">Asunto</label>
-                <input type="text" name="subject" [(ngModel)]="formData.subject"
+                <label for="subject" class="block text-sm font-medium text-emerald-500 dark:text-emerald-400 mb-2">Asunto</label>
+                <input type="text" id="subject" name="subject" [(ngModel)]="formData.subject"
                   placeholder="Asunto del mensaje" class="cyber-input"
                   (keyup)="updateTerminalPreview()" (focus)="updateTerminalPreview()">
               </div>
 
               <!-- Message -->
               <div>
-                <label class="block text-sm font-medium text-pink-500 dark:text-pink-400 mb-2">Mensaje <span class="text-red-400">*</span></label>
-                <textarea name="message" [(ngModel)]="formData.message" required rows="4"
+                <label for="message" class="block text-sm font-medium text-pink-500 dark:text-pink-400 mb-2">Mensaje <span class="text-red-400">*</span></label>
+                <textarea id="message" name="message" [(ngModel)]="formData.message" required rows="4"
                   placeholder="Escribe tu mensaje aquí..." class="cyber-input resize-none"
                   (keyup)="updateTerminalPreview()" (focus)="updateTerminalPreview()"></textarea>
               </div>
