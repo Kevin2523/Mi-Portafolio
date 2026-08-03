@@ -71,16 +71,6 @@ import { CvDownloadComponent } from '../../shared/components/cv-download/cv-down
                     Contactar
                   </a>
                 </div>
-
-        <!-- Tech tags -->
-                <div class="flex gap-3 flex-wrap mt-3" appScrollReveal="fade-up" [delay]="700">
-                  <span class="px-3 py-1 text-sm text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-100 dark:border-indigo-500/20 rounded-lg">Angular</span>
-                  <span class="px-3 py-1 text-sm text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-500/10 border border-purple-100 dark:border-purple-500/20 rounded-lg">TypeScript</span>
-                  <span class="px-3 py-1 text-sm text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-500/10 border border-blue-100 dark:border-blue-500/20 rounded-lg">NestJS</span>
-                  <span class="px-3 py-1 text-sm text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-100 dark:border-emerald-500/20 rounded-lg">n8n / Flowise</span>
-                  <span class="px-3 py-1 text-sm text-pink-600 dark:text-pink-400 bg-pink-50 dark:bg-pink-500/10 border border-pink-100 dark:border-pink-500/20 rounded-lg">Google Ads</span>
-                  <span class="px-3 py-1 text-sm text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-500/10 border border-orange-100 dark:border-orange-500/20 rounded-lg">Docker</span>
-                </div>
       </div>
 
     </section>
