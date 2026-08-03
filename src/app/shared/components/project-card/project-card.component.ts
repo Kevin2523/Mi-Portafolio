@@ -1,5 +1,4 @@
 import { Component, Input, inject } from '@angular/core';
-import { NgClass } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Project } from '../../../core/models/project.model';
 import { UiStateService } from '../../../core/services/ui-state.service';
@@ -8,7 +7,7 @@ import { TechIconService } from '../../../core/services/tech-icon.service';
 @Component({
   selector: 'app-project-card',
   standalone: true,
-  imports: [NgClass],
+  imports: [],
   template: `
     <div 
       class="group relative flex flex-col h-full w-full rounded-2xl overflow-hidden bg-white dark:bg-cyber-900/60 border border-slate-200 dark:border-slate-800/60 shadow-lg shadow-slate-200/50 dark:shadow-none transition-all duration-500 hover:shadow-xl hover:shadow-indigo-200/50 dark:hover:shadow-[0_0_40px_rgba(34,211,238,0.06)] hover:-translate-y-1 cursor-pointer"
