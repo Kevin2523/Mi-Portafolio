@@ -43,16 +43,6 @@ import { TechIconService } from '../../../core/services/tech-icon.service';
             <div class="absolute inset-0 bg-gradient-to-t from-white/80 dark:from-cyber-900/80 via-transparent to-transparent"></div>
             <!-- Subtle top light line -->
             <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-indigo-300/30 dark:via-white/10 to-transparent"></div>
-           
-            <!-- Badge overlay -->
-            @if (project.stats && project.stats.length > 0) {
-              <div class="absolute top-3 right-3 z-10">
-                <span class="inline-flex items-center gap-1.5 px-3 py-1 text-xs text-indigo-600 dark:text-indigo-400 bg-white/80 dark:bg-slate-900/60 border border-indigo-200 dark:border-indigo-400/30 rounded-lg backdrop-blur shadow-sm">
-                  <span class="w-1.5 h-1.5 bg-indigo-500 dark:bg-indigo-400 rounded-full animate-pulse"></span>
-                  Ver detalle
-                </span>
-              </div>
-            }
           </div>
         }
 
@@ -70,18 +60,6 @@ import { TechIconService } from '../../../core/services/tech-icon.service';
           <p class="text-sm leading-7 text-slate-600 dark:text-slate-400 mb-4">
             {{ project.shortDescription }}
           </p>
-
-          <!-- Stats -->
-          @if (project.stats && project.stats.length > 0) {
-            <div class="grid grid-cols-3 gap-2 mb-5">
-              @for (stat of project.stats; track stat.label) {
-                <div class="bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800/60 rounded-xl p-3">
-                  <span class="block text-[8px] font-mono text-slate-500 dark:text-slate-600 uppercase tracking-widest mb-1">{{ stat.label }}</span>
-                  <span class="font-display font-bold text-base" [ngClass]="stat.colorClass">{{ stat.value }}</span>
-                </div>
-              }
-            </div>
-          }
 
           <div class="flex-grow"></div>
 

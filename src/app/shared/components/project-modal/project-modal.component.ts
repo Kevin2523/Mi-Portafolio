@@ -154,42 +154,6 @@ import { TechIconService } from '../../../core/services/tech-icon.service';
               </div>
             </div>
 
-            <!-- Metrics -->
-            @if (project.metrics && project.metrics.length > 0) {
-              <div>
-                <h3 class="text-lg font-bold font-display text-slate-800 dark:text-white mb-3">Métricas Clave</h3>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-                  @for (metric of project.metrics; track metric.label) {
-                    <div class="p-4 rounded-xl bg-white dark:bg-cyber-900/60 border border-slate-200 dark:border-slate-800/60">
-                      <span class="block text-[10px] font-mono uppercase tracking-widest text-slate-500 dark:text-slate-600 mb-1">
-                        {{ metric.label }}
-                      </span>
-                      <span class="font-display font-bold text-xl" [ngClass]="metric.colorClass">
-                        {{ metric.value }}
-                      </span>
-                    </div>
-                  }
-                </div>
-              </div>
-            }
-
-            <!-- Challenges -->
-            @if (project.challenges && project.challenges.length > 0) {
-              <div>
-                <h3 class="text-lg font-bold font-display text-slate-800 dark:text-white mb-3">Retos Resueltos</h3>
-                <ul class="space-y-2">
-                  @for (challenge of project.challenges; track challenge) {
-                    <li class="flex items-start gap-3 p-3 rounded-lg bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800/60">
-                      <svg class="w-5 h-5 flex-shrink-0 mt-0.5 text-emerald-500 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                      </svg>
-                      <span class="text-slate-600 dark:text-slate-400 text-sm leading-6">{{ challenge }}</span>
-                    </li>
-                  }
-                </ul>
-              </div>
-            }
-
             <!-- Action Buttons -->
             <div class="flex flex-wrap gap-4 pt-4 border-t border-slate-200 dark:border-slate-800/60">
               @if (project.liveUrl && project.liveUrl !== '#') {

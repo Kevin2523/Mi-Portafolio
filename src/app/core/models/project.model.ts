@@ -11,14 +11,10 @@ export interface Project {
   longDescription: string;
   technologies: string[];
   role: string;
-  challenges: string[];
-  metrics: ProjectStats[];
   screenshots: string[];
   liveUrl?: string;
   repoUrl?: string;
-  isDashboardPreview?: boolean;
   bentoClass?: string;
-  stats?: ProjectStats[];
   featured?: boolean;
 }
 
@@ -35,30 +31,12 @@ export const KEVIN_PROJECTS: Project[] = [
       'Docker', 'CI/CD'
     ],
     role: 'Full-Stack Developer & Security Architect',
-    challenges: [
-      'Integrar múltiples herramientas de seguridad (SAST, DAST, SCA) en un pipeline unificado',
-      'Diseñar flujos de IA que generen reportes ejecutivos precisos y accionables',
-      'Implementar control de acceso granular con auditoría inmutable',
-      'Optimizar rendimiento para dashboards con miles de vulnerabilidades'
-    ],
-    metrics: [
-      { label: 'Security Score', value: 'A+', colorClass: 'text-emerald-600 dark:text-emerald-400' },
-      { label: 'Compliance Rate', value: '98%', colorClass: 'text-indigo-600 dark:text-indigo-400' },
-      { label: 'Risks Detected', value: '3 críticos', colorClass: 'text-yellow-600 dark:text-yellow-400' },
-      { label: 'Audit Time Reduction', value: '94%', colorClass: 'text-purple-600 dark:text-purple-400' }
-    ],
     screenshots: [
           '/projects/nextaudit.png'
         ],
     liveUrl: '#',
     repoUrl: '#',
-    isDashboardPreview: true,
     bentoClass: 'md:col-span-1',
-    stats: [
-      { label: 'Security Score', value: 'A+', colorClass: 'text-emerald-600 dark:text-emerald-400' },
-      { label: 'Compliance Rate', value: '98%', colorClass: 'text-indigo-600 dark:text-indigo-400' },
-      { label: 'Risks Detected', value: '3', colorClass: 'text-yellow-600 dark:text-yellow-400' }
-    ],
     featured: true
   },
   {
@@ -70,18 +48,6 @@ export const KEVIN_PROJECTS: Project[] = [
       'WordPress', 'PHP', 'MySQL', 'CSS', 'HTML'
     ],
     role: 'Lead Developer',
-    challenges: [
-      'Cumplir estrictos requisitos de accesibilidad WCAG 2.1 AA en institución pública (auditoría certificada)',
-      'Gestionar agenda dinámica multi-track con zonas horarias automáticas y conflictos de horario',
-      'Integrar streaming en vivo con fallback adaptativo para ancho de banda limitado',
-      'Desplegar en infraestructura universitaria con restricciones de seguridad'
-    ],
-    metrics: [
-      { label: 'Lighthouse Performance', value: '98', colorClass: 'text-emerald-600 dark:text-emerald-400' },
-      { label: 'Accessibility Score', value: '100', colorClass: 'text-indigo-600 dark:text-indigo-400' },
-      { label: 'Best Practices', value: '96', colorClass: 'text-purple-600 dark:text-purple-400' },
-      { label: 'SEO Score', value: '100', colorClass: 'text-cyan-600 dark:text-cyan-400' }
-    ],
     screenshots: [
           '/projects/jornada-industrial.png'
         ],
@@ -100,18 +66,6 @@ export const KEVIN_PROJECTS: Project[] = [
       'PHP', 'MySQL', 'REST API', 'WhatsApp Business API', 'EmailJS', 'Chart.js'
     ],
     role: 'Full-Stack Developer',
-    challenges: [
-      'Integrar frontend moderno con backend existente sin reescritura completa',
-      'Sincronización de stock en tiempo real entre tienda física y online',
-      'Implementar checkout seguro sin pasarela de pagos certificada',
-      'Diseñar UX móvil-first para clientes no técnicos'
-    ],
-    metrics: [
-      { label: 'Products Catalog', value: '200+', colorClass: 'text-emerald-600 dark:text-emerald-400' },
-      { label: 'Orders/Month', value: '150+', colorClass: 'text-indigo-600 dark:text-indigo-400' },
-      { label: 'Mobile Traffic', value: '78%', colorClass: 'text-purple-600 dark:text-purple-400' },
-      { label: 'Conversion Rate', value: '3.2%', colorClass: 'text-cyan-600 dark:text-cyan-400' }
-    ],
     screenshots: [
           '/projects/casa-jean.png'
         ],
@@ -129,17 +83,6 @@ export const KEVIN_PROJECTS: Project[] = [
       'Copywriting', 'CRO', 'A/B Testing'
     ],
     role: 'Digital Marketing Specialist',
-    challenges: [
-      'Generar tráfico de calidad con presupuesto limitado',
-      'Optimizar campañas para maximizar clicks en WhatsApp',
-      'Combatir fraude de clics y tráfico inválido',
-      'Escalar gestión multi-cliente manteniendo resultados'
-    ],
-    metrics: [
-      { label: 'Avg. CTR (Search)', value: '6.8%', colorClass: 'text-emerald-600 dark:text-emerald-400' },
-      { label: 'Avg. CPA Reduction', value: '35%', colorClass: 'text-indigo-600 dark:text-indigo-400' },
-      { label: 'Client Retention', value: '92%', colorClass: 'text-purple-600 dark:text-purple-400' }
-    ],
     screenshots: [
           '/projects/google-ads-web.png'
         ],
