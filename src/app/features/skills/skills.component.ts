@@ -69,23 +69,24 @@ export class SkillsComponent {
       title: 'Frontend',
       gradient: 'from-blue-500 to-cyan-400',
       items: [
-        { name: 'HTML5', iconKey: 'HTML' },
-        { name: 'CSS3', iconKey: 'CSS' },
+        { name: 'HTML', iconKey: 'HTML' },
+        { name: 'CSS', iconKey: 'CSS' },
         { name: 'JavaScript', iconKey: 'JavaScript' },
         { name: 'Angular', iconKey: 'Angular' },
         { name: 'TypeScript', iconKey: 'TypeScript' },
-        { name: 'Tailwind', iconKey: 'Tailwind CSS' }
+        { name: 'Tailwind', iconKey: 'Tailwind' }
       ]
     },
     {
       title: 'Backend',
       gradient: 'from-emerald-500 to-teal-400',
       items: [
+        { name: 'PHP', iconKey: 'PHP' },
         { name: 'NestJS', iconKey: 'NestJS' },
         { name: 'Node.js', iconKey: 'Node.js' },
-        { name: 'PHP', iconKey: 'PHP' },
         { name: 'MySQL', iconKey: 'MySQL' },
         { name: 'PostgreSQL', iconKey: 'PostgreSQL' },
+        { name: 'SQL Server', iconKey: 'SQL Server' },
         { name: 'Docker', iconKey: 'Docker' }
       ]
     },
@@ -93,22 +94,10 @@ export class SkillsComponent {
       title: 'Herramientas',
       gradient: 'from-purple-500 to-pink-400',
       items: [
-        { name: 'Git', iconKey: 'Git' },
         { name: 'GitHub', iconKey: 'GitHub' },
-        { name: 'VS Code', iconKey: 'VSCode' },
-        { name: 'n8n', iconKey: 'n8n' },
+        { name: 'VS Code', iconKey: 'VS Code' },
         { name: 'Google Ads', iconKey: 'Google Ads' },
         { name: 'WordPress', iconKey: 'WordPress' }
-      ]
-    },
-    {
-      title: 'Seguridad',
-      gradient: 'from-red-500 to-orange-400',
-      items: [
-        { name: 'OWASP', iconKey: 'OWASP' },
-        { name: 'NIST', iconKey: 'NIST' },
-        { name: 'Trivy', iconKey: 'Trivy' },
-        { name: 'SonarQube', iconKey: 'SonarQube' }
       ]
     },
     {
@@ -116,7 +105,8 @@ export class SkillsComponent {
       gradient: 'from-cyan-500 to-blue-400',
       items: [
         { name: 'n8n', iconKey: 'n8n' },
-        { name: 'Flowise', iconKey: 'Flowise' }
+        { name: 'Flowise', iconKey: 'Flowise' },
+        { name: 'Ollama', iconKey: 'Ollama' }
       ]
     },
     {
