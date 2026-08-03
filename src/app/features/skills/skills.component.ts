@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ScrollRevealDirective } from '../../core/services/scroll-animation.service';
+import { TechIconService } from '../../core/services/tech-icon.service';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 interface TechItem {
   name: string;
-  letter: string;
-  color: string;
+  iconKey: string;
 }
 
 interface TechCategory {
@@ -42,11 +43,8 @@ interface TechCategory {
             <div class="grid grid-cols-3 gap-4">
               @for (tech of category.items; track tech.name) {
                 <div class="flex flex-col items-center gap-2 group/tech">
-                  <div class="w-14 h-14 rounded-xl flex items-center justify-center transition-all duration-300 group-hover/tech:scale-110 group-hover/tech:shadow-lg"
-                       [style.background]="tech.color + '18'"
-                       [style.border]="'2px solid ' + tech.color + '40'"
-                       [style.color]="tech.color">
-                    <span class="text-lg font-bold font-display">{{ tech.letter }}</span>
+                  <div class="w-14 h-14 rounded-xl flex items-center justify-center transition-all duration-300 group-hover/tech:scale-110 group-hover/tech:shadow-lg bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/50">
+                    <span class="w-8 h-8" [innerHTML]="getIcon(tech.iconKey)"></span>
                   </div>
                   <span class="text-[11px] text-slate-500 dark:text-slate-400 text-center leading-tight">{{ tech.name }}</span>
                 </div>
@@ -59,66 +57,73 @@ interface TechCategory {
   `
 })
 export class SkillsComponent {
+  private techIconService = inject(TechIconService);
+  private sanitizer = inject(DomSanitizer);
+
+  getIcon(key: string): SafeHtml {
+    return this.sanitizer.bypassSecurityTrustHtml(this.techIconService.getIcon(key));
+  }
+
   readonly categories: TechCategory[] = [
     {
       title: 'Frontend',
       gradient: 'from-blue-500 to-cyan-400',
       items: [
-        { name: 'HTML5', letter: 'H5', color: '#E44D26' },
-        { name: 'CSS3', letter: 'C3', color: '#1572B6' },
-        { name: 'JavaScript', letter: 'JS', color: '#F7DF1E' },
-        { name: 'Angular', letter: 'A', color: '#DD0031' },
-        { name: 'TypeScript', letter: 'TS', color: '#3178C6' },
-        { name: 'Tailwind', letter: 'Tw', color: '#06B6D4' }
+        { name: 'HTML5', iconKey: 'HTML' },
+        { name: 'CSS3', iconKey: 'CSS' },
+        { name: 'JavaScript', iconKey: 'JavaScript' },
+        { name: 'Angular', iconKey: 'Angular' },
+        { name: 'TypeScript', iconKey: 'TypeScript' },
+        { name: 'Tailwind', iconKey: 'Tailwind CSS' }
       ]
     },
     {
       title: 'Backend',
       gradient: 'from-emerald-500 to-teal-400',
       items: [
-        { name: 'NestJS', letter: 'N', color: '#E0234E' },
-        { name: 'Node.js', letter: 'NJ', color: '#339933' },
-        { name: 'PHP', letter: 'P', color: '#777BB4' },
-        { name: 'MySQL', letter: 'My', color: '#4479A1' },
-        { name: 'PostgreSQL', letter: 'Pg', color: '#4169E1' },
-        { name: 'Docker', letter: 'D', color: '#2496ED' }
+        { name: 'NestJS', iconKey: 'NestJS' },
+        { name: 'Node.js', iconKey: 'Node.js' },
+        { name: 'PHP', iconKey: 'PHP' },
+        { name: 'MySQL', iconKey: 'MySQL' },
+        { name: 'PostgreSQL', iconKey: 'PostgreSQL' },
+        { name: 'Docker', iconKey: 'Docker' }
       ]
     },
     {
       title: 'Herramientas',
       gradient: 'from-purple-500 to-pink-400',
       items: [
-        { name: 'Git', letter: 'G', color: '#F05032' },
-        { name: 'GitHub', letter: 'GH', color: '#181717' },
-        { name: 'VS Code', letter: 'VS', color: '#007ACC' },
-        { name: 'n8n', letter: 'n8', color: '#EA4B71' },
-        { name: 'Google Ads', letter: 'GA', color: '#4285F4' },
-        { name: 'WordPress', letter: 'W', color: '#21759B' }
+        { name: 'Git', iconKey: 'Git' },
+        { name: 'GitHub', iconKey: 'GitHub' },
+        { name: 'VS Code', iconKey: 'VSCode' },
+        { name: 'n8n', iconKey: 'n8n' },
+        { name: 'Google Ads', iconKey: 'Google Ads' },
+        { name: 'WordPress', iconKey: 'WordPress' }
       ]
     },
     {
       title: 'Seguridad',
       gradient: 'from-red-500 to-orange-400',
       items: [
-        { name: 'OWASP', letter: 'OW', color: '#FF6633' },
-        { name: 'NIST', letter: 'NIST', color: '#003366' },
-        { name: 'Trivy', letter: 'T', color: '#439D46' },
-        { name: 'SonarQube', letter: 'SQ', color: '#E48E3B' }
+        { name: 'OWASP', iconKey: 'OWASP' },
+        { name: 'NIST', iconKey: 'NIST' },
+        { name: 'Trivy', iconKey: 'Trivy' },
+        { name: 'SonarQube', iconKey: 'SonarQube' }
       ]
     },
     {
       title: 'Automatización & IA',
       gradient: 'from-cyan-500 to-blue-400',
       items: [
-        { name: 'n8n', letter: 'n8', color: '#EA4B71' },
-        { name: 'Flowise', letter: 'F', color: '#2563EB' }
+        { name: 'n8n', iconKey: 'n8n' },
+        { name: 'Flowise', iconKey: 'Flowise' }
       ]
     },
     {
       title: 'Mobile',
       gradient: 'from-orange-500 to-yellow-400',
       items: [
-        { name: 'Kotlin', letter: 'K', color: '#7F52FF' }
+        { name: 'Kotlin', iconKey: 'Kotlin' }
       ]
     }
   ];
