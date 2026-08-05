@@ -12,7 +12,7 @@ let pdfFonts: any;
   imports: [CommonModule],
   template: `
     <button type="button" (click)="downloadCV()" [disabled]="isGenerating()"
-      class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900/50 text-slate-700 dark:text-slate-300 font-semibold text-sm hover:border-indigo-300 dark:hover:border-indigo-500/50 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
+      class="w-full inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3 py-2.5 sm:px-5 sm:py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900/50 text-slate-700 dark:text-slate-300 font-semibold text-xs sm:text-sm hover:border-indigo-300 dark:hover:border-indigo-500/50 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
       [class.opacity-50]="isGenerating()" [class.cursor-not-allowed]="isGenerating()">
       @if (isGenerating()) {
         <svg class="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
