@@ -7,7 +7,7 @@ export type TerminalStatus = 'idle' | 'sending' | 'success' | 'error';
   providedIn: 'root'
 })
 export class UiStateService {
-  readonly isDarkMode = signal<boolean>(true);
+  readonly isDarkMode = signal<boolean>(false);
   readonly isMobileNavOpen = signal<boolean>(false);
   readonly activeSection = signal<string>('hero');
 
@@ -99,6 +99,6 @@ export class UiStateService {
 
   private initTheme(): void {
     const savedTheme = localStorage.getItem('km_theme');
-    this.isDarkMode.set(savedTheme ? savedTheme === 'dark' : true);
+    this.isDarkMode.set(savedTheme ? savedTheme === 'dark' : false);
   }
 }
