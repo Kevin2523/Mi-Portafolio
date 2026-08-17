@@ -1,5 +1,6 @@
 import { Component, Input, inject } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { TranslatePipe } from '../../../core/i18n/translate.pipe';
 import { Project } from '../../../core/models/project.model';
 import { UiStateService } from '../../../core/services/ui-state.service';
 import { TechIconService } from '../../../core/services/tech-icon.service';
@@ -7,7 +8,7 @@ import { TechIconService } from '../../../core/services/tech-icon.service';
 @Component({
   selector: 'app-project-card',
   standalone: true,
-  imports: [],
+  imports: [TranslatePipe],
   template: `
     <div 
       class="group relative flex flex-col h-full w-full rounded-2xl overflow-hidden bg-white dark:bg-cyber-900/60 border border-slate-200 dark:border-slate-800/60 shadow-lg shadow-slate-200/50 dark:shadow-none transition-all duration-500 hover:shadow-xl hover:shadow-indigo-200/50 dark:hover:shadow-[0_0_40px_rgba(34,211,238,0.06)] hover:-translate-y-1 cursor-pointer"
@@ -51,13 +52,13 @@ import { TechIconService } from '../../../core/services/tech-icon.service';
           <!-- Title & Icon row -->
           <div class="flex items-start justify-between gap-3 mb-3">
             <h3 class="text-xl md:text-2xl font-bold tracking-tight font-display text-slate-800 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors duration-300">
-              {{ project.title }}
+              {{ project.title | t }}
             </h3>
           </div>
 
           <!-- Description -->
           <p class="text-sm leading-7 text-slate-600 dark:text-slate-400 mb-4">
-            {{ project.shortDescription }}
+            {{ project.shortDescription | t }}
           </p>
 
           <div class="flex-grow"></div>
@@ -65,7 +66,7 @@ import { TechIconService } from '../../../core/services/tech-icon.service';
           <!-- Footer -->
           <div class="pt-4 border-t border-slate-100 dark:border-slate-800/70">
             <p class="text-[10px] font-medium text-slate-400 dark:text-slate-600 uppercase tracking-widest mb-3">
-              Tecnologías
+              {{ 'skills.title' | t }}
             </p>
 
             <div class="flex flex-wrap gap-2 mb-4">
@@ -79,7 +80,7 @@ import { TechIconService } from '../../../core/services/tech-icon.service';
 
             @if (project.liveUrl && project.liveUrl !== '#') {
               <span class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-indigo-500 to-indigo-700 dark:from-indigo-400 dark:to-purple-400 text-white text-sm font-semibold tracking-wide transition-all duration-300 hover:shadow-[0_0_20px_rgba(99,102,241,0.25)] hover:-translate-y-0.5">
-                <span>Ver proyecto</span>
+                <span>{{ 'proj.btn.live' | t }}</span>
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
                 </svg>
@@ -87,7 +88,7 @@ import { TechIconService } from '../../../core/services/tech-icon.service';
             } @else {
               <span class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-400 dark:text-slate-500 text-sm cursor-not-allowed bg-slate-50 dark:bg-transparent">
                 <span class="w-2 h-2 rounded-full bg-amber-400/80 animate-pulse"></span>
-                En desarrollo
+                {{ 'proj.btn.dev' | t }}
               </span>
             }
           </div>

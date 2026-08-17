@@ -5,10 +5,12 @@ import {
   OnInit,
   ElementRef,
   ViewChild,
-  AfterViewChecked
+  AfterViewChecked,
+  inject
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgClass } from '@angular/common';
+import { TranslatePipe } from '../../core/i18n/translate.pipe';
 import emailjs from '@emailjs/browser';
 
 // ─── Configuración EmailJS ────────────────────────────────────────────────────
@@ -67,7 +69,7 @@ interface TerminalLine {
 @Component({
   selector: 'app-contact',
   standalone: true,
-  imports: [FormsModule, NgClass],
+  imports: [FormsModule, NgClass, TranslatePipe],
   styles: [`
     .terminal-body { scroll-behavior: smooth; }
     @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
@@ -151,7 +153,7 @@ interface TerminalLine {
     <section class="py-24 px-6 w-full max-w-6xl mx-auto relative z-10" id="contact">
       <div class="mb-12">
         <h2 class="text-3xl md:text-4xl font-bold font-display">
-          Contacto
+          {{ 'contact.title' | t }}
         </h2>
         <div class="h-[2px] w-24 bg-gradient-to-r from-indigo-400 via-purple-400 to-transparent dark:from-indigo-400 dark:via-purple-400 to-transparent mt-4"></div>
       </div>
@@ -198,33 +200,33 @@ interface TerminalLine {
               
               <!-- Name -->
               <div>
-                <label for="from_name" class="block text-sm font-medium text-indigo-500 dark:text-indigo-400 mb-2">Nombre <span class="text-red-400">*</span></label>
+                <label for="from_name" class="block text-sm font-medium text-indigo-500 dark:text-indigo-400 mb-2">{{ 'contact.form.nameLabel' | t }} <span class="text-red-400">*</span></label>
                 <input type="text" id="from_name" name="from_name" [(ngModel)]="formData.name" required
-                  placeholder="Tu nombre" class="cyber-input" #nameField
+                  [placeholder]="'contact.form.placeholderName' | t" class="cyber-input" #nameField
                   (keyup)="updateTerminalPreview()" (focus)="updateTerminalPreview()">
               </div>
 
               <!-- Email -->
               <div>
-                <label for="from_email" class="block text-sm font-medium text-purple-500 dark:text-purple-400 mb-2">Correo electrónico <span class="text-red-400">*</span></label>
+                <label for="from_email" class="block text-sm font-medium text-purple-500 dark:text-purple-400 mb-2">{{ 'contact.form.emailLabel' | t }} <span class="text-red-400">*</span></label>
                 <input type="email" id="from_email" name="from_email" [(ngModel)]="formData.email" required
-                  placeholder="tu@correo.com" class="cyber-input"
+                  [placeholder]="'contact.form.placeholderEmail' | t" class="cyber-input"
                   (keyup)="updateTerminalPreview()" (focus)="updateTerminalPreview()">
               </div>
 
               <!-- Subject -->
               <div>
-                <label for="subject" class="block text-sm font-medium text-emerald-500 dark:text-emerald-400 mb-2">Asunto</label>
+                <label for="subject" class="block text-sm font-medium text-emerald-500 dark:text-emerald-400 mb-2">{{ 'contact.form.subjectLabel' | t }}</label>
                 <input type="text" id="subject" name="subject" [(ngModel)]="formData.subject"
-                  placeholder="Asunto del mensaje" class="cyber-input"
+                  [placeholder]="'contact.form.placeholderSubject' | t" class="cyber-input"
                   (keyup)="updateTerminalPreview()" (focus)="updateTerminalPreview()">
               </div>
 
               <!-- Message -->
               <div>
-                <label for="message" class="block text-sm font-medium text-pink-500 dark:text-pink-400 mb-2">Mensaje <span class="text-red-400">*</span></label>
+                <label for="message" class="block text-sm font-medium text-pink-500 dark:text-pink-400 mb-2">{{ 'contact.form.messageLabel' | t }} <span class="text-red-400">*</span></label>
                 <textarea id="message" name="message" [(ngModel)]="formData.message" required rows="4"
-                  placeholder="Escribe tu mensaje aquí..." class="cyber-input resize-none"
+                  [placeholder]="'contact.form.placeholderMessage' | t" class="cyber-input resize-none"
                   (keyup)="updateTerminalPreview()" (focus)="updateTerminalPreview()"></textarea>
               </div>
 
@@ -235,7 +237,7 @@ interface TerminalLine {
                   [ngClass]="msg.type === 'success' ? 'bg-emerald-50 dark:bg-emerald-400/5 border-emerald-200 dark:border-emerald-400/30 text-emerald-700 dark:text-emerald-400' :
                             msg.type === 'error' ? 'bg-red-50 dark:bg-red-950/30 border-red-200 dark:border-red-800/50 text-red-600 dark:text-red-400' :
                             'bg-amber-50 dark:bg-yellow-950/30 border-amber-200 dark:border-yellow-800/50 text-amber-600 dark:text-yellow-400'">
-                  <span class="text-slate-400 dark:text-slate-600">→</span> {{ msg.text }}
+                  <span class="text-slate-400 dark:text-slate-600">→</span> {{ msg.text | t }}
                 </div>
               }
 
@@ -248,9 +250,9 @@ interface TerminalLine {
                       <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
                       <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.3730 0 0 5.373 0 12h4z"/>
                     </svg>
-                    <span>ENVIANDO...</span>
+                    <span>{{ 'contact.form.sending' | t }}</span>
                   } @else {
-                    <span>> enviar_mensaje</span>
+                    <span>> {{ 'contact.form.submit' | t }}</span>
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
                     </svg>
@@ -354,7 +356,7 @@ export class ContactComponent implements OnInit, AfterViewChecked {
         { text: '✅ Message sent successfully!', color: 'green' },
         { text: `Status: ${result.status} | Text: ${result.text}`, color: 'dim' },
       ]);
-      this.statusSig.set({ text: '✅ ¡Mensaje enviado con éxito! Te responderé pronto.', type: 'success' });
+      this.statusSig.set({ text: 'contact.form.success', type: 'success' });
       this.formData.name = '';
       this.formData.email = '';
       this.formData.subject = '';
@@ -368,7 +370,7 @@ export class ContactComponent implements OnInit, AfterViewChecked {
         { text: 'Check EmailJS credentials in contact.component.ts', color: 'dim' },
       ]);
       this.statusSig.set({
-        text: '❌ Error al enviar. Revisa que EmailJS esté configurado correctamente.',
+        text: 'contact.form.error',
         type: 'error'
       });
     } finally {

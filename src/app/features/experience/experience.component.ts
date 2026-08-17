@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, PLATFORM_ID, computed, inject, signal } from '@angular/core';
 import { isPlatformBrowser, NgClass } from '@angular/common';
+import { TranslatePipe } from '../../core/i18n/translate.pipe';
 import { ScrollRevealDirective } from '../../core/services/scroll-animation.service';
 
 interface ExperienceEntry {
@@ -12,20 +13,20 @@ interface ExperienceEntry {
 @Component({
   selector: 'app-experience',
   standalone: true,
-  imports: [NgClass, ScrollRevealDirective],
+  imports: [NgClass, ScrollRevealDirective, TranslatePipe],
   styles: [`...`],
   template: `
     <section id="experience" class="relative w-full py-32 px-6 overflow-hidden" appScrollReveal="fade-up" [delay]="100">
       <div class="relative z-10 max-w-4xl mx-auto">
        
         <header class="mb-24" appScrollReveal="fade-up" [delay]="200">
-          <p class="font-mono text-[11px] tracking-[0.3em] text-indigo-500 dark:text-indigo-400 uppercase mb-3">Trayectoria</p>
+          <p class="font-mono text-[11px] tracking-[0.3em] text-indigo-500 dark:text-indigo-400 uppercase mb-3">{{ 'experience.badge' | t }}</p>
           <h2 class="text-4xl md:text-5xl font-bold font-display tracking-tight leading-none mb-6">
-            Experiencia
+            {{ 'experience.title' | t }}
           </h2>
           <div class="h-[2px] w-24 bg-gradient-to-r from-indigo-400 via-purple-400 to-transparent dark:from-indigo-400 dark:via-purple-400 to-transparent mb-4"></div>
           <p class="text-slate-500 dark:text-slate-500 text-sm max-w-lg leading-relaxed">
-            Proyectos reales, sitios funcionales y tecnología aplicada a objetivos concretos.
+            {{ 'experience.subtitle' | t }}
           </p>
         </header>
 
@@ -85,10 +86,10 @@ interface ExperienceEntry {
                       }
                     </div>
 
-                    <h3 class="text-lg md:text-xl font-bold text-slate-800 dark:text-white leading-tight mb-1 font-display">{{ entry.role }}</h3>
-                    <p class="text-slate-500 dark:text-slate-500 text-sm mb-4">{{ entry.company }}</p>
+                    <h3 class="text-lg md:text-xl font-bold text-slate-800 dark:text-white leading-tight mb-1 font-display">{{ entry.role | t }}</h3>
+                    <p class="text-slate-500 dark:text-slate-500 text-sm mb-4">{{ entry.company | t }}</p>
 
-                    <p class="text-slate-600 dark:text-slate-400 text-sm leading-7 font-light mb-4">{{ entry.description }}</p>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm leading-7 font-light mb-4">{{ entry.description | t }}</p>
 
                     <div class="flex flex-wrap gap-2">
                       @for (h of entry.highlights; track h) {
@@ -98,7 +99,7 @@ interface ExperienceEntry {
                             'text-indigo-600 dark:text-indigo-400 border-indigo-200 dark:border-indigo-400/30 bg-indigo-50 dark:bg-indigo-400/5': entry.accentColor === 'cyan',
                             'text-purple-600 dark:text-purple-400 border-purple-200 dark:border-purple-400/30 bg-purple-50 dark:bg-purple-400/5': entry.accentColor === 'purple'
                           }">
-                          {{ h }}
+                          {{ h | t }}
                         </span>
                       }
                     </div>
@@ -121,23 +122,23 @@ export class ExperienceComponent implements AfterViewInit, OnDestroy {
   readonly entries: ExperienceEntry[] = [
     {
       id: 'rosero-one', period: '2026',
-      company: 'Rosero One', role: 'Práctica Profesional — Seguridad e IA',
-      description: 'Práctica profesional de dos meses en la empresa Rosero One, donde apliqué conocimientos de ciberseguridad e inteligencia artificial en un entorno laboral real: auditorías, monitoreo y herramientas de seguridad informática.',
-      highlights: ['Ciberseguridad', 'IA aplicada', 'Auditoría', 'Entorno laboral real'],
+      company: 'exp.rosero.company', role: 'exp.rosero.role',
+      description: 'exp.rosero.desc',
+      highlights: ['exp.rosero.h1', 'exp.rosero.h2', 'exp.rosero.h3', 'exp.rosero.h4'],
       accentColor: 'emerald', isActive: false,
     },
     {
       id: 'jornada-industrial-cocle', period: '2026',
-      company: 'Jornada Industrial Coclé - UTP', role: 'Desarrollador Web',
-      description: 'Desarrollo del sitio web oficial para la Jornada Industrial de UTP Coclé, facilitando el acceso público a información del evento, agenda dinámica, perfiles de ponentes y transmisión en vivo.',
-      highlights: ['Web institucional', 'Frontend', 'UX/UI', 'Contenido público', 'UTP Coclé'],
+      company: 'exp.jornada.company', role: 'exp.jornada.role',
+      description: 'exp.jornada.desc',
+      highlights: ['exp.jornada.h1', 'exp.jornada.h2', 'exp.jornada.h3', 'exp.jornada.h4', 'exp.jornada.h5'],
       accentColor: 'cyan', isActive: false,
     },
     {
       id: 'web-clientes', period: '2026',
-      company: 'Proyectos para clientes', role: 'Desarrollador Web y Publicidad Digital',
-      description: 'Desarrollo de páginas web para negocios locales que ofrecen sus servicios, combinado con campañas de Google Ads y Google Maps: seguimiento de estadísticas y optimización continua para mejorar el rendimiento y las ventas de cada cliente.',
-      highlights: ['Páginas web', 'Google Ads', 'Google Maps', 'Análisis de métricas', 'Optimización'],
+      company: 'exp.web.company', role: 'exp.web.role',
+      description: 'exp.web.desc',
+      highlights: ['exp.web.h1', 'exp.web.h2', 'exp.web.h3', 'exp.web.h4', 'exp.web.h5'],
       accentColor: 'purple', isActive: true,
     }
   ];

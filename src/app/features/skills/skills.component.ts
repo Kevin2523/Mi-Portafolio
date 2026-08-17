@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TranslatePipe } from '../../core/i18n/translate.pipe';
 import { ScrollRevealDirective } from '../../core/services/scroll-animation.service';
 import { TechIconService } from '../../core/services/tech-icon.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
@@ -18,13 +19,13 @@ interface TechCategory {
 @Component({
   selector: 'app-skills',
   standalone: true,
-  imports: [CommonModule, ScrollRevealDirective],
+  imports: [CommonModule, ScrollRevealDirective, TranslatePipe],
   template: `
     <section class="py-24 px-6 w-full max-w-6xl mx-auto relative z-10" id="skills">
       <div class="mb-16" appScrollReveal="fade-up" [delay]="100">
-        <p class="font-mono text-[11px] tracking-[0.3em] text-indigo-500 dark:text-indigo-400 uppercase mb-3">Stack</p>
+        <p class="font-mono text-[11px] tracking-[0.3em] text-indigo-500 dark:text-indigo-400 uppercase mb-3">{{ 'skills.badge' | t }}</p>
         <h2 class="text-3xl md:text-4xl font-bold font-display text-slate-800 dark:text-white">
-          Tecnologías
+          {{ 'skills.title' | t }}
         </h2>
         <div class="h-[2px] w-24 bg-gradient-to-r from-indigo-400 via-purple-400 to-transparent mt-4"></div>
       </div>
@@ -36,7 +37,7 @@ interface TechCategory {
             
             <!-- Category Header -->
             <h3 class="text-lg font-bold font-display mb-5 bg-gradient-to-r bg-clip-text text-transparent {{ category.gradient }}">
-              {{ category.title }}
+              {{ category.title | t }}
             </h3>
 
             <!-- Tech Grid -->
@@ -66,7 +67,7 @@ export class SkillsComponent {
 
   readonly categories: TechCategory[] = [
     {
-      title: 'Frontend',
+      title: 'skills.cat.frontend',
       gradient: 'from-blue-500 to-cyan-400',
       items: [
         { name: 'HTML', iconKey: 'HTML' },
@@ -78,7 +79,7 @@ export class SkillsComponent {
       ]
     },
     {
-      title: 'Backend',
+      title: 'skills.cat.backend',
       gradient: 'from-emerald-500 to-teal-400',
       items: [
         { name: 'PHP', iconKey: 'PHP' },
@@ -91,7 +92,7 @@ export class SkillsComponent {
       ]
     },
     {
-      title: 'Herramientas',
+      title: 'skills.cat.tools',
       gradient: 'from-purple-500 to-pink-400',
       items: [
         { name: 'GitHub', iconKey: 'GitHub' },
@@ -101,7 +102,7 @@ export class SkillsComponent {
       ]
     },
     {
-      title: 'Automatización & IA',
+      title: 'skills.cat.ai',
       gradient: 'from-cyan-500 to-blue-400',
       items: [
         { name: 'n8n', iconKey: 'n8n' },
@@ -110,7 +111,7 @@ export class SkillsComponent {
       ]
     },
     {
-      title: 'Mobile',
+      title: 'skills.cat.mobile',
       gradient: 'from-orange-500 to-yellow-400',
       items: [
         { name: 'Kotlin', iconKey: 'Kotlin' }

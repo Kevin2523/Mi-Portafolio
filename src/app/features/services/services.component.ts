@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { NgClass } from '@angular/common';
+import { TranslatePipe } from '../../core/i18n/translate.pipe';
 import { ScrollRevealDirective } from '../../core/services/scroll-animation.service';
 import { TechIconService } from '../../core/services/tech-icon.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
@@ -7,13 +8,13 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 @Component({
   selector: 'app-services',
   standalone: true,
-  imports: [NgClass, ScrollRevealDirective],
+  imports: [NgClass, ScrollRevealDirective, TranslatePipe],
   template: `
     <section id="services" class="py-24 px-6 w-full max-w-6xl mx-auto relative z-10">
       <div class="mb-16" appScrollReveal="fade-up" [delay]="100">
-        <p class="font-mono text-[11px] tracking-[0.3em] text-indigo-500 dark:text-indigo-400 uppercase mb-3">Lo que hago</p>
+        <p class="font-mono text-[11px] tracking-[0.3em] text-indigo-500 dark:text-indigo-400 uppercase mb-3">{{ 'srv.badge' | t }}</p>
         <h2 class="text-3xl md:text-4xl font-bold font-display text-slate-800 dark:text-white">
-          Servicios
+          {{ 'services.title' | t }}
         </h2>
         <div class="h-[2px] w-24 bg-gradient-to-r from-indigo-400 via-purple-400 to-transparent mt-4"></div>
       </div>
@@ -31,12 +32,12 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
             <!-- Title -->
             <h3 class="text-lg font-bold font-display text-slate-800 dark:text-white mb-2">
-              {{ service.title }}
+              {{ service.title | t }}
             </h3>
 
             <!-- Description -->
             <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed mb-4">
-              {{ service.description }}
+              {{ service.description | t }}
             </p>
 
             <!-- Result -->
@@ -44,7 +45,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
               <svg class="w-4 h-4 text-emerald-500 dark:text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
               </svg>
-              <span class="text-[11px] text-slate-500 dark:text-slate-400">{{ service.result }}</span>
+              <span class="text-[11px] text-slate-500 dark:text-slate-400">{{ service.result | t }}</span>
             </div>
           </div>
         }
@@ -58,81 +59,81 @@ export class ServicesComponent {
 
   services = [
     {
-      title: 'Consultoría de TI',
-      description: 'Asesoría técnica personalizada para empresas y emprendedores. Analizo tus necesidades y te propongo soluciones tecnológicas que optimizan procesos y reducen costos.',
+      title: 'srv.1.title',
+      description: 'srv.1.desc',
       icon: this.getIconSafe('Consultoría'),
       iconClass: 'bg-indigo-50 dark:bg-indigo-400/10 text-indigo-500 dark:text-indigo-400 border-indigo-200 dark:border-indigo-400/30',
-      result: 'Soluciones a medida · Reducción de costos · Eficiencia operativa'
+      result: 'srv.1.res'
     },
     {
-      title: 'Desarrollo Web',
-      description: 'Sitios web completos, landing pages y e-commerce que convierten. Desde una página institucional hasta una tienda online con panel de administración.',
+      title: 'srv.2.title',
+      description: 'srv.2.desc',
       icon: this.getIconSafe('Angular'),
       iconClass: 'bg-emerald-50 dark:bg-emerald-400/10 text-emerald-500 dark:text-emerald-400 border-emerald-200 dark:border-emerald-400/30',
-      result: 'Sitios rápidos · SEO optimizado · Responsive-first'
+      result: 'srv.2.res'
     },
     {
-      title: 'Desarrollo de Aplicaciones',
-      description: 'Aplicaciones de escritorio, herramientas internas y sistemas a medida que automatizan procesos empresariales y mejoran la productividad.',
+      title: 'srv.3.title',
+      description: 'srv.3.desc',
       icon: this.getIconSafe('Aplicaciones'),
       iconClass: 'bg-purple-50 dark:bg-purple-400/10 text-purple-500 dark:text-purple-400 border-purple-200 dark:border-purple-400/30',
-      result: 'Automatización · Productividad · Soluciones a medida'
+      result: 'srv.3.res'
     },
     {
-      title: 'Software Personalizado',
-      description: 'Desarrollo de software a medida que se adapta exactamente a tus necesidades. Sin soluciones genéricas, todo hecho para tu caso de uso específico.',
+      title: 'srv.4.title',
+      description: 'srv.4.desc',
       icon: this.getIconSafe('Software'),
       iconClass: 'bg-blue-50 dark:bg-blue-400/10 text-blue-500 dark:text-blue-400 border-blue-200 dark:border-blue-400/30',
-      result: '100% personalizado · Escalable · Soporte continuo'
+      result: 'srv.4.res'
     },
     {
-      title: 'Desarrollo de Bases de Datos',
-      description: 'Diseño, implementación y optimización de bases de datos relacionales y no relacionales. Estructuras eficientes que crecen con tu negocio.',
+      title: 'srv.5.title',
+      description: 'srv.5.desc',
       icon: this.getIconSafe('Base de Datos'),
       iconClass: 'bg-amber-50 dark:bg-amber-400/10 text-amber-500 dark:text-amber-400 border-amber-200 dark:border-amber-400/30',
-      result: 'Bases optimizadas · Consultas rápidas · Integridad de datos'
+      result: 'srv.5.res'
     },
     {
-      title: 'Desarrollo Móvil',
-      description: 'Aplicaciones nativas Android con Kotlin para negocios que necesitan una app funcional, moderna y que sus clientes quieran usar.',
+      title: 'srv.6.title',
+      description: 'srv.6.desc',
       icon: this.getIconSafe('Móvil'),
       iconClass: 'bg-orange-50 dark:bg-orange-400/10 text-orange-500 dark:text-orange-400 border-orange-200 dark:border-orange-400/30',
-      result: 'Apps nativas · UX nativa · Play Store ready'
+      result: 'srv.6.res'
     },
     {
-      title: 'Desarrollo de SaaS',
-      description: 'Plataformas SaaS completas con autenticación, suscripciones, multi-tenant y panel de administración. Todo lo que necesitas para tu producto digital.',
+      title: 'srv.7.title',
+      description: 'srv.7.desc',
       icon: this.getIconSafe('SaaS'),
       iconClass: 'bg-rose-50 dark:bg-rose-400/10 text-rose-500 dark:text-rose-400 border-rose-200 dark:border-rose-400/30',
-      result: 'Multi-tenant · Suscripciones · Escalable'
+      result: 'srv.7.res'
     },
     {
-      title: 'Publicidad Digital',
-      description: 'Llevo tráfico de Google directamente a tu página. Las personas buscan lo que ofreces, hacen click y te contactan por WhatsApp.',
+      title: 'srv.8.title',
+      description: 'srv.8.desc',
       icon: this.getIconSafe('Google Ads'),
       iconClass: 'bg-indigo-50 dark:bg-indigo-400/10 text-indigo-500 dark:text-indigo-400 border-indigo-200 dark:border-indigo-400/30',
-      result: 'CTR 6.8% · CPA -35% · 92% retención clientes'
+      result: 'srv.8.res'
     },
     {
-      title: 'Análisis de Datos',
-      description: 'Transformo datos crudos en dashboards interactivos que cuentan una historia. Ventas, campañas, inventario — lo que necesitas para tomar mejores decisiones.',
+      title: 'srv.9.title',
+      description: 'srv.9.desc',
       icon: this.getIconSafe('PowerBI'),
       iconClass: 'bg-yellow-50 dark:bg-yellow-400/10 text-yellow-500 dark:text-yellow-400 border-yellow-200 dark:border-yellow-400/30',
-      result: 'Dashboards automatizados · Decisiones basadas en datos'
+      result: 'srv.9.res'
     },
     {
-      title: 'Automatización con IA',
-      description: 'Automatizo procesos repetitivos usando inteligencia artificial. Desde chatbots que responden clientes hasta flujos de trabajo que se ejecutan solos.',
+      title: 'srv.10.title',
+      description: 'srv.10.desc',
       icon: this.getIconSafe('n8n'),
       iconClass: 'bg-cyan-50 dark:bg-cyan-400/10 text-cyan-500 dark:text-cyan-400 border-cyan-200 dark:border-cyan-400/30',
-      result: 'Ahorro de tiempo · Reducción de errores · Escalabilidad'
+      result: 'srv.10.res'
     },
     {
-      title: 'Gestión en la Nube',
-      description: 'Configuración y administración de servidores en la nube. Infraestructura segura, escalable y optimizada para reducir costos operativos.',
+      title: 'srv.11.title',
+      description: 'srv.11.desc',
       icon: this.getIconSafe('Nube'),
       iconClass: 'bg-teal-50 dark:bg-teal-400/10 text-teal-500 dark:text-teal-400 border-teal-200 dark:border-teal-400/30',
-      result: 'Infraestructura segura · Escalable · Costos optimizados'
+      result: 'srv.11.res'
     }
   ];
 
