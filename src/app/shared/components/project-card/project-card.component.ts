@@ -10,16 +10,16 @@ import { TechIconService } from '../../../core/services/tech-icon.service';
   standalone: true,
   imports: [TranslatePipe],
   template: `
-    <div 
-      class="group relative flex flex-col h-full w-full rounded-2xl overflow-hidden bg-white dark:bg-cyber-900/60 border border-slate-200 dark:border-slate-800/60 shadow-lg shadow-slate-200/50 dark:shadow-none transition-all duration-500 hover:shadow-xl hover:shadow-indigo-200/50 dark:hover:shadow-[0_0_40px_rgba(34,211,238,0.06)] hover:-translate-y-1 cursor-pointer"
+    <a 
+      [href]="project.liveUrl && project.liveUrl !== '#' ? project.liveUrl : '#projects'"
+      (click)="openModal(); $event.preventDefault()"
+      (keydown.enter)="openModal(); $event.preventDefault()"
+      (keydown.space)="openModal(); $event.preventDefault()"
+      class="group relative flex flex-col h-full w-full rounded-2xl overflow-hidden bg-white dark:bg-cyber-900/60 border border-slate-200 dark:border-slate-800/60 shadow-lg shadow-slate-200/50 dark:shadow-none transition-all duration-500 hover:shadow-xl hover:shadow-indigo-200/50 dark:hover:shadow-[0_0_40px_rgba(34,211,238,0.06)] hover:-translate-y-1 cursor-pointer no-underline text-inherit"
       (mousemove)="updateSpotlight($event)"
       (mouseleave)="isHovered = false"
-      (click)="openModal()"
-      (keydown.enter)="openModal()"
-      (keydown.space)="openModal()"
       tabindex="0"
-      role="button"
-      [attr.aria-label]="'Ver detalle de ' + project.title"
+      [attr.aria-label]="'Ver detalle de ' + (project.title | t)"
     >
       <!-- Light-mode spotlight (indigo) / Dark-mode spotlight (cyan) -->
       <div 
@@ -94,7 +94,7 @@ import { TechIconService } from '../../../core/services/tech-icon.service';
           </div>
         </div>
       </div>
-    </div>
+    </a>
   `
 })
 export class ProjectCardComponent {

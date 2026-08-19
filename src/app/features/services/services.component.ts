@@ -59,39 +59,11 @@ export class ServicesComponent {
 
   services = [
     {
-      title: 'srv.1.title',
-      description: 'srv.1.desc',
-      icon: this.getIconSafe('Consultoría'),
-      iconClass: 'bg-indigo-50 dark:bg-indigo-400/10 text-indigo-500 dark:text-indigo-400 border-indigo-200 dark:border-indigo-400/30',
-      result: 'srv.1.res'
-    },
-    {
       title: 'srv.2.title',
       description: 'srv.2.desc',
       icon: this.getIconSafe('Angular'),
       iconClass: 'bg-emerald-50 dark:bg-emerald-400/10 text-emerald-500 dark:text-emerald-400 border-emerald-200 dark:border-emerald-400/30',
       result: 'srv.2.res'
-    },
-    {
-      title: 'srv.3.title',
-      description: 'srv.3.desc',
-      icon: this.getIconSafe('Aplicaciones'),
-      iconClass: 'bg-purple-50 dark:bg-purple-400/10 text-purple-500 dark:text-purple-400 border-purple-200 dark:border-purple-400/30',
-      result: 'srv.3.res'
-    },
-    {
-      title: 'srv.4.title',
-      description: 'srv.4.desc',
-      icon: this.getIconSafe('Software'),
-      iconClass: 'bg-blue-50 dark:bg-blue-400/10 text-blue-500 dark:text-blue-400 border-blue-200 dark:border-blue-400/30',
-      result: 'srv.4.res'
-    },
-    {
-      title: 'srv.5.title',
-      description: 'srv.5.desc',
-      icon: this.getIconSafe('Base de Datos'),
-      iconClass: 'bg-amber-50 dark:bg-amber-400/10 text-amber-500 dark:text-amber-400 border-amber-200 dark:border-amber-400/30',
-      result: 'srv.5.res'
     },
     {
       title: 'srv.6.title',
@@ -115,25 +87,11 @@ export class ServicesComponent {
       result: 'srv.8.res'
     },
     {
-      title: 'srv.9.title',
-      description: 'srv.9.desc',
-      icon: this.getIconSafe('PowerBI'),
-      iconClass: 'bg-yellow-50 dark:bg-yellow-400/10 text-yellow-500 dark:text-yellow-400 border-yellow-200 dark:border-yellow-400/30',
-      result: 'srv.9.res'
-    },
-    {
       title: 'srv.10.title',
       description: 'srv.10.desc',
       icon: this.getIconSafe('n8n'),
       iconClass: 'bg-cyan-50 dark:bg-cyan-400/10 text-cyan-500 dark:text-cyan-400 border-cyan-200 dark:border-cyan-400/30',
       result: 'srv.10.res'
-    },
-    {
-      title: 'srv.11.title',
-      description: 'srv.11.desc',
-      icon: this.getIconSafe('Nube'),
-      iconClass: 'bg-teal-50 dark:bg-teal-400/10 text-teal-500 dark:text-teal-400 border-teal-200 dark:border-teal-400/30',
-      result: 'srv.11.res'
     }
   ];
 
