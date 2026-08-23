@@ -1,4 +1,5 @@
 import { Component, Input, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TranslatePipe } from '../../../core/i18n/translate.pipe';
 import { Project } from '../../../core/models/project.model';
@@ -8,93 +9,98 @@ import { TechIconService } from '../../../core/services/tech-icon.service';
 @Component({
   selector: 'app-project-card',
   standalone: true,
-  imports: [TranslatePipe],
+  imports: [CommonModule, TranslatePipe],
   template: `
-    <a 
-      [href]="project.liveUrl && project.liveUrl !== '#' ? project.liveUrl : '#projects'"
-      (click)="openModal(); $event.preventDefault()"
-      (keydown.enter)="openModal(); $event.preventDefault()"
-      (keydown.space)="openModal(); $event.preventDefault()"
-      class="group relative flex flex-col h-full w-full rounded-2xl overflow-hidden bg-white dark:bg-cyber-900/60 border border-slate-200 dark:border-slate-800/60 shadow-lg shadow-slate-200/50 dark:shadow-none transition-all duration-500 hover:shadow-xl hover:shadow-indigo-200/50 dark:hover:shadow-[0_0_40px_rgba(34,211,238,0.06)] hover:-translate-y-1 cursor-pointer no-underline text-inherit"
+    <div 
+      (click)="openModal()"
+      (keydown.enter)="openModal()"
+      (keydown.space)="openModal()"
+      class="group relative flex flex-col h-full w-full rounded-2xl overflow-hidden cursor-pointer select-none transition-all duration-300"
       (mousemove)="updateSpotlight($event)"
       (mouseleave)="isHovered = false"
       tabindex="0"
       [attr.aria-label]="'Ver detalle de ' + (project.title | t)"
     >
-      <!-- Light-mode spotlight (indigo) / Dark-mode spotlight (cyan) -->
+      <!-- Spotlight Ambient Layer -->
       <div 
-        class="pointer-events-none absolute -inset-px rounded-2xl transition-opacity duration-300 z-0"
+        class="pointer-events-none absolute -inset-px rounded-2xl transition-opacity duration-300 z-10"
         [style.opacity]="isHovered ? '1' : '0'"
         [style.background]="spotlightGradient"
       ></div>
 
-      <div class="relative z-10 flex flex-col flex-grow">
+      <div class="relative z-20 flex flex-col flex-grow">
        
-        <!-- Screenshot area with device frame -->
+        <!-- Screenshot Preview Area with Glass Reflection -->
         @if (project.screenshots && project.screenshots.length > 0) {
-          <div class="relative h-44 md:h-48 overflow-hidden bg-slate-100 dark:bg-cyber-800">
+          <div class="relative h-44 md:h-52 overflow-hidden bg-slate-100 dark:bg-slate-900/80 border-b border-slate-100 dark:border-slate-800/80">
             <!-- Main image -->
             <img [src]="project.screenshots[0]" [alt]="project.title"
-                 class="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                 class="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
                  loading="lazy">
-            <!-- Glass reflection overlay -->
-            <div class="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-black/5 dark:from-white/5 dark:via-transparent dark:to-black/20 pointer-events-none"></div>
-            <!-- Bottom fade -->
-            <div class="absolute inset-0 bg-gradient-to-t from-white/80 dark:from-cyber-900/80 via-transparent to-transparent"></div>
-            <!-- Subtle top light line -->
-            <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-indigo-300/30 dark:via-white/10 to-transparent"></div>
+            
+            <!-- Gradient overlays -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
+            
+            <!-- Quick View floating pill on image -->
+            <div class="absolute bottom-3 right-3 flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-black/60 backdrop-blur-md text-white text-xs font-mono opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 shadow-sm">
+              <span>{{ 'proj.btn.modal' | t }}</span>
+              <svg class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+              </svg>
+            </div>
+
+            <!-- Featured Badge if applicable -->
+            @if (project.featured) {
+              <div class="absolute top-3 left-3 flex items-center gap-1 px-2.5 py-1 rounded-md bg-amber-500 text-white text-[10px] font-mono font-semibold uppercase tracking-wider shadow-sm">
+                <span>★ Destacado</span>
+              </div>
+            }
           </div>
         }
 
-        <!-- Content -->
-        <div class="flex flex-col flex-grow p-6">
+        <!-- Card Content Area -->
+        <div class="flex flex-col flex-grow p-6 md:p-7">
          
-          <!-- Title & Icon row -->
-          <div class="flex items-start justify-between gap-3 mb-3">
-            <h3 class="text-xl md:text-2xl font-bold tracking-tight font-display text-slate-800 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors duration-300">
+          <!-- Title row -->
+          <div class="flex items-start justify-between gap-3 mb-2">
+            <h3 class="text-xl md:text-2xl font-bold tracking-tight font-display text-slate-900 dark:text-white group-hover:text-amber-500 dark:group-hover:text-amber-400 transition-colors duration-200">
               {{ project.title | t }}
             </h3>
+            
+            <div class="w-8 h-8 rounded-lg border border-slate-200/80 dark:border-slate-800 flex items-center justify-center text-slate-400 group-hover:text-amber-500 group-hover:border-amber-500/40 transition-colors flex-shrink-0">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+              </svg>
+            </div>
           </div>
 
           <!-- Description -->
-          <p class="text-sm leading-7 text-slate-600 dark:text-slate-400 mb-4">
+          <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-400 mb-6 font-normal">
             {{ project.shortDescription | t }}
           </p>
 
           <div class="flex-grow"></div>
 
-          <!-- Footer -->
+          <!-- Technologies row -->
           <div class="pt-4 border-t border-slate-100 dark:border-slate-800/70">
-            <p class="text-[10px] font-medium text-slate-400 dark:text-slate-600 uppercase tracking-widest mb-3">
-              {{ 'skills.title' | t }}
-            </p>
-
-            <div class="flex flex-wrap gap-2 mb-4">
-              @for (tech of project.technologies; track tech) {
-                <span class="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-800/30 text-slate-500 dark:text-slate-400 group-hover:border-indigo-300 dark:group-hover:border-indigo-400/30 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-all duration-300">
+            <div class="flex flex-wrap gap-1.5">
+              @for (tech of project.technologies.slice(0, 5); track tech) {
+                <span class="inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-md border border-slate-200/80 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 text-slate-600 dark:text-slate-400">
                   <span class="w-3.5 h-3.5 flex-shrink-0" [innerHTML]="getIconSafe(tech)"></span>
                   {{ tech }}
                 </span>
               }
+              @if (project.technologies.length > 5) {
+                <span class="inline-flex items-center text-xs px-2 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 font-mono">
+                  +{{ project.technologies.length - 5 }}
+                </span>
+              }
             </div>
-
-            @if (project.liveUrl && project.liveUrl !== '#') {
-              <span class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-indigo-500 to-indigo-700 dark:from-indigo-400 dark:to-purple-400 text-white text-sm font-semibold tracking-wide transition-all duration-300 hover:shadow-[0_0_20px_rgba(99,102,241,0.25)] hover:-translate-y-0.5">
-                <span>{{ 'proj.btn.live' | t }}</span>
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
-                </svg>
-              </span>
-            } @else {
-              <span class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-400 dark:text-slate-500 text-sm cursor-not-allowed bg-slate-50 dark:bg-transparent">
-                <span class="w-2 h-2 rounded-full bg-amber-400/80 animate-pulse"></span>
-                {{ 'proj.btn.dev' | t }}
-              </span>
-            }
           </div>
         </div>
       </div>
-    </a>
+    </div>
   `
 })
 export class ProjectCardComponent {
@@ -109,9 +115,9 @@ export class ProjectCardComponent {
   private sanitizer = inject(DomSanitizer);
 
   get spotlightGradient(): string {
-    const lightColor = 'rgba(99,102,241,0.04)';  // indigo for light
-    const darkColor = 'rgba(34,211,238,0.05)';   // cyan for dark
-    return `radial-gradient(500px circle at ${this.mouseX}px ${this.mouseY}px, ${lightColor}, transparent 40%)`;
+    const lightColor = 'rgba(245, 158, 11, 0.08)';  // amber glow for light
+    const darkColor = 'rgba(245, 158, 11, 0.06)';   // amber glow for dark
+    return `radial-gradient(450px circle at ${this.mouseX}px ${this.mouseY}px, ${lightColor}, transparent 45%)`;
   }
 
   updateSpotlight(event: MouseEvent): void {
@@ -128,4 +134,4 @@ export class ProjectCardComponent {
   getIconSafe(tech: string): SafeHtml {
     return this.sanitizer.bypassSecurityTrustHtml(this.techIconService.getIcon(tech));
   }
-}
+}

@@ -14,7 +14,6 @@ interface ExperienceEntry {
   selector: 'app-experience',
   standalone: true,
   imports: [NgClass, ScrollRevealDirective, TranslatePipe],
-  styles: [`...`],
   template: `
     <section id="experience" class="relative w-full py-32 px-6 overflow-hidden" appScrollReveal="fade-up" [delay]="100">
       <div class="relative z-10 max-w-4xl mx-auto">
