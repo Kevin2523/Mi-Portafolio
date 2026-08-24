@@ -39,24 +39,19 @@ import { KEVIN_PROJECTS } from '../../core/models/project.model';
           <app-project-card [project]="projects[0]" class="block h-full"></app-project-card>
         </div>
 
-        <!-- Project 2: NextAudit -->
+        <!-- Project 2: Jornada -->
         <div class="bento-glow-card">
           <app-project-card [project]="projects[1]" class="block h-full"></app-project-card>
         </div>
 
-        <!-- Project 3: Jornada -->
+        <!-- Project 3: Casa Jean -->
         <div class="bento-glow-card">
           <app-project-card [project]="projects[2]" class="block h-full"></app-project-card>
         </div>
 
-        <!-- Project 4: Casa Jean -->
-        <div class="bento-glow-card">
+        <!-- Project 4: NextAudit (featured, 2 cols) -->
+        <div class="bento-glow-card md:col-span-2">
           <app-project-card [project]="projects[3]" class="block h-full"></app-project-card>
-        </div>
-
-        <!-- Project 5: Google Ads -->
-        <div class="bento-glow-card">
-          <app-project-card [project]="projects[4]" class="block h-full"></app-project-card>
         </div>
 
         <!-- Skills Card -->

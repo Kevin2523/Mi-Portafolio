@@ -33,27 +33,7 @@ export const KEVIN_PROJECTS: Project[] = [
         ],
     liveUrl: 'https://anibalreydecorazones.com',
     repoUrl: '#',
-    bentoClass: 'md:col-span-1',
-    featured: true
-  },
-  {
-    id: 'nextaudit',
-    title: 'proj.nextaudit.title',
-    shortDescription: 'proj.nextaudit.short',
-    longDescription: 'proj.nextaudit.long',
-    technologies: [
-      'Angular', 'RxJS', 'Signals',
-      'NestJS', 'Node.js', 'PostgreSQL',
-      'n8n', 'Flowise', 'REST API',
-      'Docker', 'CI/CD'
-    ],
-    role: 'proj.nextaudit.role',
-    screenshots: [
-          '/projects/nextaudit.png'
-        ],
-    liveUrl: '#',
-    repoUrl: '#',
-    bentoClass: 'md:col-span-1',
+    bentoClass: 'md:col-span-2',
     featured: true
   },
   {
@@ -91,20 +71,23 @@ export const KEVIN_PROJECTS: Project[] = [
     bentoClass: 'md:col-span-1'
   },
   {
-    id: 'google-ads-web',
-    title: 'proj.google.title',
-    shortDescription: 'proj.google.short',
-    longDescription: 'proj.google.long',
+    id: 'nextaudit',
+    title: 'proj.nextaudit.title',
+    shortDescription: 'proj.nextaudit.short',
+    longDescription: 'proj.nextaudit.long',
     technologies: [
-      'Google Ads (Search)', 'Landing Pages', 'Google Analytics 4',
-      'Copywriting', 'CRO', 'A/B Testing'
+      'Angular', 'RxJS', 'Signals',
+      'NestJS', 'Node.js', 'PostgreSQL',
+      'n8n', 'Flowise', 'REST API',
+      'Docker', 'CI/CD'
     ],
-    role: 'proj.google.role',
+    role: 'proj.nextaudit.role',
     screenshots: [
-          '/projects/google-ads-web.png'
+          '/projects/nextaudit.png'
         ],
     liveUrl: '#',
     repoUrl: '#',
-    bentoClass: 'md:col-span-1'
+    bentoClass: 'md:col-span-2',
+    featured: true
   }
 ];
