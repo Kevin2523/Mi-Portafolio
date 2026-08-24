@@ -101,65 +101,27 @@ export class CvDownloadComponent {
           ],
           style: 'contact',
           alignment: 'center',
-          margin: [0, 0, 0, 10]
+          margin: [0, 0, 0, 8]
         },
 
-        // ===== EDUCACIÓN =====
-        { text: 'EDUCACIÓN', style: 'section' },
-        this.eduEntry(
-          'Universidad Tecnológica de Panamá',
-          'Panamá',
-          'Licenciatura en Desarrollo y Gestión de Software',
-          '2023 – 2026'
-        ),
+        // ===== PERFIL (headline de venta) =====
+        { text: 'PERFIL', style: 'section' },
+        {
+          text: 'Full-Stack Developer con enfoque en resultados. Desarrollo web, e-commerce y publicidad digital para negocios que quieren vender más en internet. Combino código moderno con estrategia de conversión: no solo hago páginas bonitas, hago páginas que convierten visitantes en clientes.',
+          style: 'bullet',
+          margin: [0, 0, 0, 6]
+        },
 
-        // ===== EXPERIENCIA =====
-        { text: 'EXPERIENCIA PROFESIONAL', style: 'section' },
-
-        // Rosero One
-        this.expEntry(
-          'Práctica Profesional',
-          'Rosero One',
-          'Panamá',
-          'Inicio 2026',
-          [
-            'Práctica profesional de dos meses en la empresa Rosero One, donde apliqué conocimientos de ciberseguridad e inteligencia artificial en un entorno laboral real.',
-            'Auditorías, monitoreo y herramientas de seguridad informática.'
-          ]
-        ),
-
-        // Freelance
-        this.expEntry(
-          'Desarrollador Freelance',
-          'Independiente',
-          'Panamá',
-          '2026 – Presente',
-          [
-            'Desarrollo de todo tipo de aplicaciones para clientes locales: web, móviles, automatizaciones y más.',
-            'Implementación de sistemas de seguridad siguiendo estándares OWASP y buenas prácticas de desarrollo.',
-            'Gestión completa de proyectos: desde la recolección de requerimientos hasta el despliegue.'
-          ]
-        ),
-
-        // ===== PROYECTOS =====
+        // ===== PROYECTOS DESTACADOS (prueba social primero) =====
         { text: 'PROYECTOS DESTACADOS', style: 'section' },
 
-        // NextAudit AI
+        // Anibal Rey de Corazones
         this.projectEntry(
-          'NextAudit AI — Sistema de Auditorías con IA',
+          'Anibal Rey de Corazones — Landing Page + Google Ads',
           [
-            'Plataforma SaaS para auditorías automatizadas utilizando Angular 21 + NestJS + PostgreSQL.',
-            'Integración de autenticación biométrica (WebAuthn) y despliegue con Docker + GitHub Actions.',
-            'Sistema de roles y permisos para gestión de equipos de auditoría.'
-          ]
-        ),
-
-        // Jornada Industrial
-        this.projectEntry(
-          'Jornada Industrial — Sitio Web Institucional',
-          [
-            'Desarrollo del sitio web oficial para la Jornada Industrial de UTP Coclé con WordPress.',
-            'Plataforma informativa con agenda dinámica, perfiles de ponentes y registro de participantes.'
+            'Landing page de alta conversión para guía espiritual profesional en Panamá.',
+            'Gestión completa de campañas Google Ads con seguimiento de conversiones vía WhatsApp.',
+            'Resultado: flujo constante de clientes desde Google directo al WhatsApp del negocio.'
           ]
         ),
 
@@ -167,13 +129,59 @@ export class CvDownloadComponent {
         this.projectEntry(
           'La Casa del Jean — Tienda E-commerce',
           [
-            'Tienda en línea con Angular 21 + PHP + MySQL para gestión de productos y pedidos.',
+            'Tienda en línea con Angular 21 + PHP + MySQL: catálogo 200+ productos, carrito persistente, checkout.',
             'Panel de administración para control de inventario, pedidos y clientes.'
           ]
         ),
 
+        // NextAudit AI
+        this.projectEntry(
+          'NextAudit AI — Sistema de Auditorías con IA',
+          [
+            'Plataforma SaaS para auditorías automatizadas utilizando Angular 21 + NestJS + PostgreSQL.',
+            'Integración de autenticación biométrica (WebAuthn) y despliegue con Docker + GitHub Actions.'
+          ]
+        ),
+
+        // Jornada Industrial
+        this.projectEntry(
+          'Jornada Industrial — Sitio Web Institucional',
+          [
+            'Sitio web oficial para la Jornada Industrial de UTP Coclé con WordPress.',
+            'Plataforma informativa con agenda dinámica, perfiles de ponentes y registro de participantes.'
+          ]
+        ),
+
+        // ===== EXPERIENCIA PROFESIONAL (contexto) =====
+        { text: 'EXPERIENCIA PROFESIONAL', style: 'section' },
+
+        // Freelance
+        this.expEntry(
+          'Desarrollador Web y Publicidad Digital',
+          'Independiente',
+          'Panamá',
+          '2026 – Presente',
+          [
+            'Desarrollo de páginas web para negocios locales combinado con campañas de Google Ads.',
+            'Seguimiento de estadísticas y optimización continua para mejorar ventas de cada cliente.',
+            'Gestión completa: desde la recolección de requerimientos hasta el despliegue y marketing.'
+          ]
+        ),
+
+        // Rosero One
+        this.expEntry(
+          'Práctica Profesional — Seguridad e IA',
+          'Rosero One',
+          'Panamá',
+          '2026',
+          [
+            'Práctica profesional aplicando ciberseguridad e inteligencia artificial en entorno laboral real.',
+            'Auditorías, monitoreo y herramientas de seguridad informática.'
+          ]
+        ),
+
         // ===== HABILIDADES =====
-        { text: 'HABILIDADES', style: 'section' },
+        { text: 'HABILIDADES TÉCNICAS', style: 'section' },
         {
           columns: [
             {
@@ -187,14 +195,23 @@ export class CvDownloadComponent {
             {
               width: '*',
               stack: [
+                this.skillCategory('Marketing', 'Google Ads, Google Analytics, SEO, Copywriting'),
                 this.skillCategory('Seguridad', 'OWASP, NIST, Trivy, SonarQube, WebAuthn'),
-                this.skillCategory('Otros', 'Publicidad Digital, Google Ads, Power BI, n8n'),
                 this.skillCategory('Idiomas', 'Español (nativo), Inglés (intermedio)')
               ]
             }
           ],
           margin: [0, 2, 0, 6]
         },
+
+        // ===== EDUCACIÓN (al final) =====
+        { text: 'EDUCACIÓN', style: 'section' },
+        this.eduEntry(
+          'Universidad Tecnológica de Panamá',
+          'Panamá',
+          'Licenciatura en Desarrollo y Gestión de Software',
+          '2023 – 2026'
+        ),
 
       ],
       styles: {
