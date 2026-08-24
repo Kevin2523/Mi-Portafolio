@@ -27,24 +27,36 @@ import { KEVIN_PROJECTS } from '../../core/models/project.model';
           <app-hero></app-hero>
         </div>
 
-        <!-- Project 1: NextAudit (featured, 2 cols, anchor for projects) -->
-        <div id="projects" class="bento-glow-card md:col-span-2 scroll-mt-24">
+        <!-- Projects Section Header -->
+        <div id="projects" class="md:col-span-2 lg:col-span-3 scroll-mt-24">
+          <p class="font-mono text-[10px] tracking-[0.2em] text-amber-500 uppercase font-semibold mb-1">PORTAFOLIO</p>
+          <h2 class="text-2xl md:text-3xl font-bold font-display text-slate-900 dark:text-white mb-1">Proyectos Destacados</h2>
+          <p class="text-sm text-slate-500 dark:text-slate-400 mb-5">Lo que he construido para negocios reales.</p>
+        </div>
+
+        <!-- Project 1: Anibal (featured, 2 cols) -->
+        <div class="bento-glow-card md:col-span-2">
           <app-project-card [project]="projects[0]" class="block h-full"></app-project-card>
         </div>
 
-        <!-- Project 2: Jornada -->
+        <!-- Project 2: NextAudit -->
         <div class="bento-glow-card">
           <app-project-card [project]="projects[1]" class="block h-full"></app-project-card>
         </div>
 
-        <!-- Project 3: Casa Jean -->
+        <!-- Project 3: Jornada -->
         <div class="bento-glow-card">
           <app-project-card [project]="projects[2]" class="block h-full"></app-project-card>
         </div>
 
-        <!-- Project 4: Google Ads (2 cols or 1 col) -->
+        <!-- Project 4: Casa Jean -->
         <div class="bento-glow-card">
           <app-project-card [project]="projects[3]" class="block h-full"></app-project-card>
+        </div>
+
+        <!-- Project 5: Google Ads -->
+        <div class="bento-glow-card">
+          <app-project-card [project]="projects[4]" class="block h-full"></app-project-card>
         </div>
 
         <!-- Skills Card -->
