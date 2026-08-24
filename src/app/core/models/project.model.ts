@@ -20,6 +20,23 @@ export interface Project {
 
 export const KEVIN_PROJECTS: Project[] = [
   {
+    id: 'anibal',
+    title: 'proj.anibal.title',
+    shortDescription: 'proj.anibal.short',
+    longDescription: 'proj.anibal.long',
+    technologies: [
+      'HTML', 'CSS', 'JavaScript', 'Google Ads', 'WhatsApp API'
+    ],
+    role: 'proj.anibal.role',
+    screenshots: [
+          '/projects/anibal.png'
+        ],
+    liveUrl: 'https://anibalreydecorazones.com',
+    repoUrl: '#',
+    bentoClass: 'md:col-span-1',
+    featured: true
+  },
+  {
     id: 'nextaudit',
     title: 'proj.nextaudit.title',
     shortDescription: 'proj.nextaudit.short',

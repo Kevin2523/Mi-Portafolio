@@ -220,5 +220,9 @@
   "proj.btn.demo": "Ver en vivo",
   "proj.btn.dev": "En desarrollo",
   "proj.btn.nodemo": "Demo no disponible",
-  "proj.btn.code": "Ver código"
+  "proj.btn.code": "Ver código",
+  "proj.anibal.title": "Anibal Rey de Corazones",
+  "proj.anibal.short": "Landing page de alta conversión con campañas de Google Ads. Flujo constante de clientes desde Google directo al WhatsApp.",
+  "proj.anibal.long": "Landing page profesional para guía espiritual en Panamá. Diseño orientado a conversión con CTA directo a WhatsApp.\n\nGestión completa de campañas Google Ads con seguimiento de conversiones. Resultado: tráfico calificado que se convierte en clientes reales.\n\nStack: HTML, CSS, JavaScript, Google Ads, WhatsApp API.",
+  "proj.anibal.role": "Desarrollador Web & Publicidad Digital"
 }
