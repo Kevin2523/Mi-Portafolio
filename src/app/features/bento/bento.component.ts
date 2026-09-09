@@ -6,6 +6,7 @@ import { SkillsCardComponent } from '../../shared/components/skills-card/skills-
 import { ExperienceCardComponent } from '../../shared/components/experience-card/experience-card.component';
 import { ServicesCardComponent } from '../../shared/components/services-card/services-card.component';
 import { ContactCardComponent } from '../../shared/components/contact-card/contact-card.component';
+import { TranslatePipe } from '../../core/i18n/translate.pipe';
 import { KEVIN_PROJECTS } from '../../core/models/project.model';
 
 @Component({
@@ -14,7 +15,7 @@ import { KEVIN_PROJECTS } from '../../core/models/project.model';
   imports: [
     CommonModule, HeroComponent, ProjectCardComponent,
     SkillsCardComponent, ExperienceCardComponent, ServicesCardComponent,
-    ContactCardComponent
+    ContactCardComponent, TranslatePipe
   ],
   template: `
     <section class="w-full max-w-6xl mx-auto px-4 md:px-6 py-10 md:py-16">
@@ -54,9 +55,29 @@ import { KEVIN_PROJECTS } from '../../core/models/project.model';
           <app-project-card [project]="projects[3]" class="block h-full"></app-project-card>
         </div>
 
-        <!-- Skills Card -->
-        <div id="skills" class="bento-glow-card scroll-mt-24">
-          <app-skills-card></app-skills-card>
+        <!-- Services -->
+        <div id="services" class="bento-glow-card md:col-span-2 scroll-mt-24">
+          <app-services-card></app-services-card>
+        </div>
+
+        <!-- Process -->
+        <div id="process" class="bento-glow-card lg:col-span-3 scroll-mt-24 p-6 md:p-8">
+          <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-2 mb-6">
+            <div>
+              <p class="font-mono text-[10px] tracking-[0.2em] text-amber-500 uppercase font-semibold mb-1">{{ 'process.badge' | t }}</p>
+              <h2 class="text-2xl md:text-3xl font-bold font-display text-slate-900 dark:text-white">{{ 'process.title' | t }}</h2>
+            </div>
+            <p class="text-sm text-slate-500 dark:text-slate-400 max-w-md">{{ 'process.subtitle' | t }}</p>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            @for (step of processSteps; track step.number) {
+              <div class="relative p-4 rounded-xl border border-slate-200/80 dark:border-slate-800/70 bg-slate-50/60 dark:bg-slate-900/30">
+                <span class="text-xs font-mono text-amber-500">{{ step.number }}</span>
+                <h3 class="mt-3 text-sm font-semibold text-slate-800 dark:text-white">{{ step.title | t }}</h3>
+                <p class="mt-1.5 text-xs leading-relaxed text-slate-500 dark:text-slate-400">{{ step.desc | t }}</p>
+              </div>
+            }
+          </div>
         </div>
 
         <!-- Experience (2 cols) -->
@@ -64,9 +85,9 @@ import { KEVIN_PROJECTS } from '../../core/models/project.model';
           <app-experience-card></app-experience-card>
         </div>
 
-        <!-- Services -->
-        <div id="services" class="bento-glow-card scroll-mt-24">
-          <app-services-card></app-services-card>
+        <!-- Skills Card -->
+        <div id="skills" class="bento-glow-card scroll-mt-24">
+          <app-skills-card></app-skills-card>
         </div>
 
         <!-- Contact (Full width at bottom: 3 cols) -->
@@ -80,6 +101,13 @@ import { KEVIN_PROJECTS } from '../../core/models/project.model';
 })
 export class BentoComponent {
   projects = KEVIN_PROJECTS;
+
+  processSteps = [
+    { number: '01', title: 'process.1.title', desc: 'process.1.desc' },
+    { number: '02', title: 'process.2.title', desc: 'process.2.desc' },
+    { number: '03', title: 'process.3.title', desc: 'process.3.desc' },
+    { number: '04', title: 'process.4.title', desc: 'process.4.desc' }
+  ];
 }
 
 
