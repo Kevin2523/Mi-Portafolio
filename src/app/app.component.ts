@@ -105,13 +105,24 @@ import { TranslatePipe } from './core/i18n/translate.pipe';
         
           <!-- Footer -->
           <footer class="mt-auto py-10 text-center relative z-10">
-            <div class="inline-flex items-center gap-4 px-6 py-3 rounded-2xl border border-slate-200 dark:border-slate-800/60 bg-white/80 dark:bg-slate-900/60 backdrop-blur shadow-sm dark:shadow-none">
+            <div class="mx-auto flex w-fit items-center gap-4 px-6 py-3 rounded-2xl border border-slate-200 dark:border-slate-800/60 bg-white/80 dark:bg-slate-900/60 backdrop-blur shadow-sm dark:shadow-none">
               <span class="font-display text-sm text-slate-500 dark:text-slate-400">
                 Kevin Mena <span class="text-slate-300 dark:text-slate-600">·</span> © 2026
               </span>
               <span class="w-px h-4 bg-slate-200 dark:bg-slate-700"></span>
               <span class="font-display text-sm text-slate-400 dark:text-slate-500">San Carlos, Panamá</span>
             </div>
+            <a href="https://menastudios.tech" target="_blank" rel="noopener noreferrer" aria-label="Visitar MenaStudios" class="mx-auto mt-4 flex w-fit items-center gap-3 text-slate-500 transition-colors hover:text-indigo-600 dark:text-slate-400 dark:hover:text-indigo-300">
+              <span class="font-display text-[10px] font-semibold uppercase tracking-[0.16em]">Desarrollado por</span>
+              <svg class="h-auto w-32 invert dark:invert-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 240" role="img" aria-labelledby="portfolio-mena-title portfolio-mena-description">
+                <title id="portfolio-mena-title">Mena Studios</title>
+                <desc id="portfolio-mena-description">Logo de Mena Studios</desc>
+                <defs><filter id="portfolio-mena-shadow" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="5" stdDeviation="4" flood-color="#000" flood-opacity=".18"/></filter></defs>
+                <path d="M37 184V63c0-20 24-29 37-14l52 62 51-62c14-16 39-6 39 15v23c0 22-18 34-48 34h-29c-29 0-47 11-47 32 0 22 20 35 50 35h83" fill="none" stroke="#FFFFFF" stroke-width="25" stroke-linecap="round" stroke-linejoin="round" filter="url(#portfolio-mena-shadow)"/>
+                <text x="273" y="108" fill="#FFFFFF" font-family="Arial, Helvetica, sans-serif" font-size="53" font-weight="800" letter-spacing="1">MENA</text>
+                <text x="274" y="164" fill="#FFFFFF" fill-opacity=".96" font-family="Arial, Helvetica, sans-serif" font-size="35" font-weight="700" letter-spacing="4">STUDIOS</text>
+              </svg>
+            </a>
           </footer>
         </div>
 
