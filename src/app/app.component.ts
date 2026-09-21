@@ -134,10 +134,9 @@ import { TranslatePipe } from './core/i18n/translate.pipe';
           <svg class="mena-logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 240" role="img" aria-labelledby="portfolio-mena-title portfolio-mena-description">
             <title id="portfolio-mena-title">Mena Studios</title>
             <desc id="portfolio-mena-description">Logo de Mena Studios</desc>
-            <defs><filter id="portfolio-mena-shadow" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="5" stdDeviation="4" flood-color="#000" flood-opacity=".18"/></filter></defs>
-            <path d="M37 184V63c0-20 24-29 37-14l52 62 51-62c14-16 39-6 39 15v23c0 22-18 34-48 34h-29c-29 0-47 11-47 32 0 22 20 35 50 35h83" fill="none" stroke="currentColor" stroke-width="25" stroke-linecap="round" stroke-linejoin="round" filter="url(#portfolio-mena-shadow)"/>
-            <text x="273" y="108" fill="currentColor" font-family="Arial, Helvetica, sans-serif" font-size="53" font-weight="800" letter-spacing="1">MENA</text>
-            <text x="274" y="164" fill="currentColor" fill-opacity=".96" font-family="Arial, Helvetica, sans-serif" font-size="35" font-weight="700" letter-spacing="4">STUDIOS</text>
+            <path d="M37 184V63c0-20 24-29 37-14l52 62 51-62c14-16 39-6 39 15v23c0 22-18 34-48 34h-29c-29 0-47 11-47 32 0 22 20 35 50 35h83" fill="none" stroke="currentColor" stroke-width="25" stroke-linecap="round" stroke-linejoin="round"/>
+            <text x="270" y="104" fill="currentColor" font-family="'Space Grotesk', system-ui, -apple-system, sans-serif" font-size="62" font-weight="800" letter-spacing="2">MENA</text>
+            <text x="272" y="165" fill="currentColor" font-family="'Space Grotesk', system-ui, -apple-system, sans-serif" font-size="46" font-weight="700" letter-spacing="4">STUDIOS</text>
           </svg>
         </a>
       </footer>
