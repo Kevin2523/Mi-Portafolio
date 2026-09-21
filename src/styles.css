@@ -1792,10 +1792,50 @@ footer {
   color: #c3d0d4;
   font-size: .74rem;
 }
-footer span:last-child {
+.footer-copy, .footer-loc {
+  font-size: .74rem;
+  color: #a8b8bc;
+}
+.footer-signature {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #c3d0d4;
+  text-decoration: none;
+  transition: all .25s ease;
+}
+.footer-signature:hover {
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+.footer-signature .signature-label {
   font-family: var(--mono);
   font-size: .62rem;
-  letter-spacing: .1em;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: inherit;
+  opacity: .85;
+}
+.mena-logo-svg {
+  width: 104px;
+  height: auto;
+  color: inherit;
+  display: block;
+  transition: opacity .2s ease;
+}
+.footer-signature:hover .mena-logo-svg {
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  footer {
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    gap: 12px;
+    padding-top: 24px;
+  }
 }
 
 /* Animations & Reveal */
