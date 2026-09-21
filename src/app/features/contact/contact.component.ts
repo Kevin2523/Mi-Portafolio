@@ -93,24 +93,24 @@ export interface RequestTypeOption {
           </fieldset>
 
           <div class="form-row">
-            <label>
+            <label for="contact-name">
               {{ 'contact.form.nameLabel' | t }}
-              <input type="text" name="name" [(ngModel)]="formData.name" [placeholder]="'contact.form.placeholderName' | t" required>
+              <input id="contact-name" type="text" name="name" autocomplete="name" [(ngModel)]="formData.name" [placeholder]="'contact.form.placeholderName' | t" required>
             </label>
-            <label>
+            <label for="contact-email">
               {{ 'contact.form.emailLabel' | t }}
-              <input type="email" name="email" [(ngModel)]="formData.email" [placeholder]="'contact.form.placeholderEmail' | t" required>
+              <input id="contact-email" type="email" name="email" autocomplete="email" [(ngModel)]="formData.email" [placeholder]="'contact.form.placeholderEmail' | t" required>
             </label>
           </div>
 
-          <label>
+          <label for="subjectInput">
             {{ 'contact.form.subjectLabel' | t }}
             <input id="subjectInput" type="text" name="subject" [(ngModel)]="formData.subject" required>
           </label>
 
-          <label>
+          <label for="contact-message">
             {{ 'contact.form.messageLabel' | t }}
-            <textarea name="message" rows="5" [(ngModel)]="formData.message" [placeholder]="'contact.form.placeholderMessage' | t" required></textarea>
+            <textarea id="contact-message" name="message" rows="5" [(ngModel)]="formData.message" [placeholder]="'contact.form.placeholderMessage' | t" required></textarea>
           </label>
 
           <button class="button button-primary submit-button" type="submit" [disabled]="isSending()">

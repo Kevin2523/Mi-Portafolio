@@ -217,6 +217,7 @@
   "contact.form.placeholderSubject": "Asunto del mensaje",
   "contact.form.placeholderMessage": "Escribe tu mensaje aquí...",
   "proj.btn.live": "Ver proyecto",
+  "proj.btn.modal": "Ver detalle",
   "proj.btn.demo": "Ver en vivo",
   "proj.btn.dev": "En desarrollo",
   "proj.btn.nodemo": "Demo no disponible",

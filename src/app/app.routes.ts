@@ -24,7 +24,7 @@ export const routes: Routes = [
         pathMatch: 'full',
         loadComponent: () =>
           import('./features/home/home.component').then(m => m.HomeComponent),
-        title: 'Kevin Mena — Full-Stack & AI Security'
+        title: 'Kevin Mena — Full-Stack Developer y Soluciones Digitales'
       },
 
       // ── Secciones con Lazy Loading ─────────────────────────────────────────

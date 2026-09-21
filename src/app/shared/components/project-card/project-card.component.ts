@@ -34,7 +34,7 @@ import { TechIconService } from '../../../core/services/tech-icon.service';
         @if (project.screenshots && project.screenshots.length > 0) {
           <div class="relative h-44 md:h-52 overflow-hidden bg-slate-100 dark:bg-slate-900/80 border-b border-slate-100 dark:border-slate-800/80">
             <!-- Main image -->
-            <img [src]="project.screenshots[0]" [alt]="project.title"
+            <img [src]="project.screenshots[0]" [alt]="project.title | t"
                  class="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
                  loading="lazy">
             
