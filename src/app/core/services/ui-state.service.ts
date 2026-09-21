@@ -27,6 +27,9 @@ export class UiStateService {
     effect(() => {
       const dark = this.isDarkMode();
       document.documentElement.classList.toggle('dark', dark);
+      if (typeof document !== 'undefined' && document.body) {
+        document.body.classList.toggle('dark', dark);
+      }
       localStorage.setItem('km_theme', dark ? 'dark' : 'light');
     });
   }
@@ -99,6 +102,13 @@ export class UiStateService {
 
   private initTheme(): void {
     const savedTheme = localStorage.getItem('km_theme');
-    this.isDarkMode.set(savedTheme ? savedTheme === 'dark' : false);
+    const isDark = savedTheme ? savedTheme === 'dark' : false;
+    this.isDarkMode.set(isDark);
+    if (typeof document !== 'undefined') {
+      document.documentElement.classList.toggle('dark', isDark);
+      if (document.body) {
+        document.body.classList.toggle('dark', isDark);
+      }
+    }
   }
 }

@@ -29,7 +29,7 @@ export const KEVIN_PROJECTS: Project[] = [
     ],
     role: 'proj.anibal.role',
     screenshots: [
-          '/projects/anibal.png'
+          '/editorial/laptop-anibal.png'
         ],
     liveUrl: 'https://anibalreydecorazones.com',
     repoUrl: '#',
@@ -46,7 +46,7 @@ export const KEVIN_PROJECTS: Project[] = [
     ],
     role: 'proj.jornada.role',
     screenshots: [
-          '/projects/jornada-industrial.png'
+          '/editorial/jornada-mockup.png'
         ],
     liveUrl: 'https://jornadaindustrialcocle.utp.ac.pa/',
     repoUrl: '#',
@@ -64,7 +64,7 @@ export const KEVIN_PROJECTS: Project[] = [
     ],
     role: 'proj.casa.role',
     screenshots: [
-          '/projects/casa-jean.png'
+          '/editorial/casa-jean-mockup.png'
         ],
     liveUrl: 'https://lacasadeljean.free.nf/?i=1',
     repoUrl: '#',
@@ -83,7 +83,7 @@ export const KEVIN_PROJECTS: Project[] = [
     ],
     role: 'proj.nextaudit.role',
     screenshots: [
-          '/projects/nextaudit.png'
+          '/editorial/nextaudit-mockup.png'
         ],
     liveUrl: '#',
     repoUrl: '#',

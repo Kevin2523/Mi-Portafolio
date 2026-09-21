@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { UiStateService } from '../../../core/services/ui-state.service';
 import { TranslatePipe } from '../../../core/i18n/translate.pipe';
 
-// pdfmake imports - using dynamic import for production compatibility
 let pdfMake: any;
 let pdfFonts: any;
 
@@ -12,20 +11,18 @@ let pdfFonts: any;
   standalone: true,
   imports: [CommonModule, TranslatePipe],
   template: `
-    <button type="button" (click)="downloadCV()" [disabled]="isGenerating()"
-      class="w-full inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3 py-2.5 sm:px-5 sm:py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900/50 text-slate-700 dark:text-slate-300 font-semibold text-xs sm:text-sm hover:border-indigo-300 dark:hover:border-indigo-500/50 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
-      [class.opacity-50]="isGenerating()" [class.cursor-not-allowed]="isGenerating()">
+    <button
+      type="button"
+      (click)="downloadCV()"
+      [disabled]="isGenerating()"
+      class="button button-secondary"
+      [class.opacity-50]="isGenerating()"
+      [class.cursor-not-allowed]="isGenerating()"
+    >
       @if (isGenerating()) {
-        <svg class="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
-          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
-          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.3730 0 0 5.373 0 12h4z"/>
-        </svg>
         <span>{{ 'cv.generating' | t }}</span>
       } @else {
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
-        </svg>
-        <span>{{ 'cv.download' | t }}</span>
+        <span>{{ 'cv.download' | t }} <span aria-hidden="true">↓</span></span>
       }
     </button>
   `
@@ -62,12 +59,10 @@ export class CvDownloadComponent {
   }
 
   private doc(): any {
-    // Colors - black/white only
     const BLACK = '#000000';
     const DARK_GRAY = '#333333';
     const MEDIUM_GRAY = '#666666';
     const LIGHT_GRAY = '#999999';
-    const WHITE = '#ffffff';
 
     return {
       pageSize: 'LETTER',
@@ -79,14 +74,12 @@ export class CvDownloadComponent {
         lineHeight: 1.15
       },
       content: [
-        // ===== NAME =====
         {
           text: 'KEVIN JHAIR MENA GOODING',
           style: 'name',
           alignment: 'center',
           margin: [0, 0, 0, 4]
         },
-        // ===== CONTACT LINE =====
         {
           text: [
             'Panamá',
@@ -104,18 +97,15 @@ export class CvDownloadComponent {
           margin: [0, 0, 0, 8]
         },
 
-        // ===== PERFIL (headline de venta) =====
         { text: 'PERFIL', style: 'section' },
         {
-          text: 'Full-Stack Developer con enfoque en resultados. Desarrollo web, e-commerce y publicidad digital para negocios que quieren vender más en internet. Combino código moderno con estrategia de conversión: no solo hago páginas bonitas, hago páginas que convierten visitantes en clientes.',
+          text: 'Full-Stack Developer con enfoque en resultados. Desarrollo web, e-commerce y publicidad digital para negocios que quieren vender más en internet. Combino código moderno con estrategia de conversión.',
           style: 'bullet',
           margin: [0, 0, 0, 6]
         },
 
-        // ===== PROYECTOS DESTACADOS (prueba social primero) =====
         { text: 'PROYECTOS DESTACADOS', style: 'section' },
 
-        // Anibal Rey de Corazones
         this.projectEntry(
           'Anibal Rey de Corazones — Landing Page + Google Ads',
           [
@@ -125,25 +115,22 @@ export class CvDownloadComponent {
           ]
         ),
 
-        // La Casa del Jean
         this.projectEntry(
           'La Casa del Jean — Tienda E-commerce',
           [
-            'Tienda en línea con Angular 21 + PHP + MySQL: catálogo 200+ productos, carrito persistente, checkout.',
+            'Tienda en línea con Angular + PHP + MySQL: catálogo 200+ productos, carrito persistente, checkout.',
             'Panel de administración para control de inventario, pedidos y clientes.'
           ]
         ),
 
-        // NextAudit AI
         this.projectEntry(
           'NextAudit AI — Sistema de Auditorías con IA',
           [
-            'Plataforma SaaS para auditorías automatizadas utilizando Angular 21 + NestJS + PostgreSQL.',
+            'Plataforma SaaS para auditorías automatizadas utilizando Angular + NestJS + PostgreSQL.',
             'Integración de autenticación biométrica (WebAuthn) y despliegue con Docker + GitHub Actions.'
           ]
         ),
 
-        // Jornada Industrial
         this.projectEntry(
           'Jornada Industrial — Sitio Web Institucional',
           [
@@ -152,10 +139,8 @@ export class CvDownloadComponent {
           ]
         ),
 
-        // ===== EXPERIENCIA PROFESIONAL (contexto) =====
         { text: 'EXPERIENCIA PROFESIONAL', style: 'section' },
 
-        // Freelance
         this.expEntry(
           'Desarrollador Web y Publicidad Digital',
           'Independiente',
@@ -168,7 +153,6 @@ export class CvDownloadComponent {
           ]
         ),
 
-        // Rosero One
         this.expEntry(
           'Práctica Profesional — Seguridad e IA',
           'Rosero One',
@@ -180,14 +164,13 @@ export class CvDownloadComponent {
           ]
         ),
 
-        // ===== HABILIDADES =====
         { text: 'HABILIDADES TÉCNICAS', style: 'section' },
         {
           columns: [
             {
               width: '*',
               stack: [
-                this.skillCategory('Frontend', 'Angular 21, Tailwind CSS, TypeScript, HTML5, CSS3, JavaScript'),
+                this.skillCategory('Frontend', 'Angular, Tailwind CSS, TypeScript, HTML5, CSS3, JavaScript'),
                 this.skillCategory('Backend', 'NestJS, PHP, MySQL, Node.js, REST APIs'),
                 this.skillCategory('Herramientas', 'Git/GitHub, Docker, Linux, VS Code')
               ]
@@ -204,7 +187,6 @@ export class CvDownloadComponent {
           margin: [0, 2, 0, 6]
         },
 
-        // ===== EDUCACIÓN (al final) =====
         { text: 'EDUCACIÓN', style: 'section' },
         this.eduEntry(
           'Universidad Tecnológica de Panamá',
@@ -212,84 +194,26 @@ export class CvDownloadComponent {
           'Licenciatura en Desarrollo y Gestión de Software',
           '2023 – 2026'
         ),
-
       ],
       styles: {
-        name: {
-          fontSize: 16,
-          bold: true,
-          color: BLACK
-        },
-        contact: {
-          fontSize: 8,
-          color: MEDIUM_GRAY
-        },
-        section: {
-          fontSize: 10,
-          bold: true,
-          color: BLACK,
-          margin: [0, 6, 0, 3],
-          decoration: 'underline',
-          decorationColor: BLACK,
-          decorationStyle: 'solid'
-        },
-        jobTitle: {
-          fontSize: 9,
-          bold: true,
-          color: DARK_GRAY
-        },
-        company: {
-          fontSize: 9,
-          italics: true,
-          color: MEDIUM_GRAY
-        },
-        date: {
-          fontSize: 8,
-          color: LIGHT_GRAY
-        },
-        bullet: {
-          fontSize: 8,
-          color: DARK_GRAY,
-          margin: [0, 1, 0, 1]
-        },
-        categoryTitle: {
-          fontSize: 8,
-          bold: true,
-          color: DARK_GRAY
-        },
-        categoryContent: {
-          fontSize: 8,
-          color: MEDIUM_GRAY,
-          margin: [0, 0, 0, 3]
-        },
-        certItem: {
-          fontSize: 8,
-          color: DARK_GRAY,
-          margin: [0, 1, 0, 1]
-        }
+        name: { fontSize: 16, bold: true, color: BLACK },
+        contact: { fontSize: 8, color: MEDIUM_GRAY },
+        section: { fontSize: 10, bold: true, color: BLACK, margin: [0, 6, 0, 3], decoration: 'underline' },
+        jobTitle: { fontSize: 9, bold: true, color: DARK_GRAY },
+        company: { fontSize: 9, italics: true, color: MEDIUM_GRAY },
+        date: { fontSize: 8, color: LIGHT_GRAY },
+        bullet: { fontSize: 8, color: DARK_GRAY, margin: [0, 1, 0, 1] },
+        categoryTitle: { fontSize: 8, bold: true, color: DARK_GRAY },
+        categoryContent: { fontSize: 8, color: MEDIUM_GRAY, margin: [0, 0, 0, 3] }
       }
     };
   }
 
-  // ===== Helper methods =====
-
   private eduEntry(school: string, location: string, degree: string, dates: string): any {
     return {
       columns: [
-        {
-          width: '*',
-          stack: [
-            { text: school, style: 'jobTitle' },
-            { text: degree, style: 'company', margin: [0, 1, 0, 0] }
-          ]
-        },
-        {
-          width: 'auto',
-          stack: [
-            { text: location, style: 'date', alignment: 'right' },
-            { text: dates, style: 'date', alignment: 'right', margin: [0, 1, 0, 0] }
-          ]
-        }
+        { width: '*', stack: [{ text: school, style: 'jobTitle' }, { text: degree, style: 'company', margin: [0, 1, 0, 0] }] },
+        { width: 'auto', stack: [{ text: location, style: 'date', alignment: 'right' }, { text: dates, style: 'date', alignment: 'right', margin: [0, 1, 0, 0] }] }
       ],
       margin: [0, 0, 0, 3]
     };
@@ -303,13 +227,7 @@ export class CvDownloadComponent {
           stack: [
             { text: title, style: 'jobTitle' },
             { text: company, style: 'company', margin: [0, 1, 0, 0] },
-            ...bullets.map(b => ({
-              text: [
-                { text: '• ', fontSize: 8 },
-                { text: b, style: 'bullet' }
-              ],
-              margin: [10, 1, 0, 0]
-            }))
+            ...bullets.map(b => ({ text: [{ text: '• ', fontSize: 8 }, { text: b, style: 'bullet' }], margin: [10, 1, 0, 0] }))
           ]
         },
         {
@@ -328,13 +246,7 @@ export class CvDownloadComponent {
     return {
       stack: [
         { text: title, style: 'jobTitle', margin: [0, 0, 0, 1] },
-        ...bullets.map(b => ({
-          text: [
-            { text: '• ', fontSize: 8 },
-            { text: b, style: 'bullet' }
-          ],
-          margin: [10, 1, 0, 0]
-        }))
+        ...bullets.map(b => ({ text: [{ text: '• ', fontSize: 8 }, { text: b, style: 'bullet' }], margin: [10, 1, 0, 0] }))
       ],
       margin: [0, 0, 0, 3]
     };
@@ -347,9 +259,5 @@ export class CvDownloadComponent {
         { text: content, style: 'categoryContent' }
       ]
     };
-  }
-
-  private certItem(text: string): any {
-    return { text: '• ' + text, style: 'certItem' };
   }
 }

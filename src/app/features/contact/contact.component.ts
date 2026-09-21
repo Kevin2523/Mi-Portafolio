@@ -1,24 +1,13 @@
-import {
-  Component,
-  signal,
-  computed,
-  OnInit,
-  ElementRef,
-  ViewChild,
-  AfterViewChecked,
-  inject
-} from '@angular/core';
+import { Component, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { NgClass } from '@angular/common';
 import { TranslatePipe } from '../../core/i18n/translate.pipe';
 import emailjs from '@emailjs/browser';
 
-// ─── Configuración EmailJS ────────────────────────────────────────────────────
 const EMAILJS_SERVICE_ID = 'service_ak4xprk';
 const EMAILJS_TEMPLATE_ID = 'template_o5k4o9j';
 const EMAILJS_PUBLIC_KEY = 'ClGvdEq4OxhPd2sL3';
 
-// ─── Anti-Spam ────────────────────────────────────────────────────────────────
 const SPAM_KEY = 'km_contact_log';
 const MAX_PER_EMAIL = 3;
 const WINDOW_MS = 24 * 60 * 60 * 1000;
@@ -33,7 +22,6 @@ function loadSpamLog(): SpamLog {
 function saveSpamLog(log: SpamLog) {
   localStorage.setItem(SPAM_KEY, JSON.stringify(log));
 }
-
 function checkSpam(email: string): string | null {
   const log = loadSpamLog();
   const key = email.toLowerCase();
@@ -42,7 +30,7 @@ function checkSpam(email: string): string | null {
   if (!rec || now - rec.firstAt > WINDOW_MS) return null;
   if (rec.count >= MAX_PER_EMAIL) {
     const resetIn = Math.ceil((rec.firstAt + WINDOW_MS - now) / 3_600_000);
-    return `SPAM_GUARD: Límite alcanzado para ${email}. Reintenta en ~${resetIn}h.`;
+    return `Límite alcanzado para ${email}. Reintenta en ~${resetIn}h.`;
   }
   return null;
 }
@@ -59,322 +47,157 @@ function recordSend(email: string) {
   saveSpamLog(log);
 }
 
-type TerminalStatus = 'idle' | 'sending' | 'success' | 'error' | 'spam';
-
-interface TerminalLine {
-  text: string;
-  color: 'default' | 'cyan' | 'green' | 'red' | 'yellow' | 'dim';
+export interface RequestTypeOption {
+  subject: string;
+  labelKey: string;
 }
 
 @Component({
   selector: 'app-contact',
   standalone: true,
-  imports: [FormsModule, NgClass, TranslatePipe],
-  styles: [`
-    .terminal-body { scroll-behavior: smooth; }
-    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
-    .cursor { animation: blink 1s step-end infinite; }
-
-    .cyber-input {
-      border-radius: 8px;
-      font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
-      font-size: 13px;
-      padding: 12px 16px;
-      width: 100%;
-      transition: border-color 0.2s, box-shadow 0.2s;
-      outline: none;
-    }
-    :host-context(.dark) .cyber-input {
-      background: rgb(15 23 42 / 0.8);
-      border: 1px solid rgb(51 65 85 / 0.8);
-      color: #e2e8f0;
-    }
-    :host-context(.dark) .cyber-input:focus {
-      border-color: rgb(34 211 238 / 0.6);
-      box-shadow: 0 0 0 3px rgb(34 211 238 / 0.08);
-    }
-    :host-context(.dark) .cyber-input::placeholder { color: rgb(100 116 139 / 0.8); }
-    :host-context:not(.dark) .cyber-input {
-      background: rgb(248 250 252);
-      border: 1px solid rgb(226 232 240);
-      color: #1e293b;
-    }
-    :host-context:not(.dark) .cyber-input:focus {
-      border-color: rgb(99 102 241 / 0.6);
-      box-shadow: 0 0 0 3px rgb(99 102 241 / 0.08);
-    }
-    :host-context:not(.dark) .cyber-input::placeholder { color: rgb(148 163 184); }
-
-    .send-btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 12px 28px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 12px; font-weight: 700; letter-spacing: 0.1em;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    :host-context(.dark) .send-btn {
-      border: 1px solid rgb(34 211 238 / 0.4);
-      background: rgb(34 211 238 / 0.1);
-      color: #22d3ee;
-    }
-    :host-context(.dark) .send-btn:hover:not(:disabled) {
-      background: rgb(34 211 238 / 0.2);
-      border-color: #22d3ee;
-      box-shadow: 0 0 20px rgb(34 211 238 / 0.15);
-    }
-    :host-context(.dark) .send-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-    :host-context:not(.dark) .send-btn {
-      border: 1px solid rgb(99 102 241 / 0.4);
-      background: rgb(99 102 241 / 0.08);
-      color: #6366f1;
-    }
-    :host-context:not(.dark) .send-btn:hover:not(:disabled) {
-      background: rgb(99 102 241 / 0.15);
-      border-color: #6366f1;
-      box-shadow: 0 0 20px rgb(99 102 241 / 0.12);
-    }
-    :host-context:not(.dark) .send-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-
-    .line-cyan    { color: #22d3ee; }
-    :host-context:not(.dark) .line-cyan { color: #6366f1; }
-    .line-green   { color: #4ade80; }
-    :host-context:not(.dark) .line-green { color: #059669; }
-    .line-red     { color: #f87171; }
-    .line-yellow  { color: #facc15; }
-    :host-context:not(.dark) .line-yellow { color: #ca8a04; }
-    .line-dim     { color: #475569; }
-    :host-context:not(.dark) .line-dim { color: #94a3b8; }
-    .line-default { color: #94a3b8; }
-    :host-context:not(.dark) .line-default { color: #475569; }
-  `],
+  imports: [CommonModule, FormsModule, TranslatePipe],
   template: `
-    <section class="py-24 px-6 w-full max-w-6xl mx-auto relative z-10" id="contact">
-      <div class="mb-12">
-        <h2 class="text-3xl md:text-4xl font-bold font-display">
-          {{ 'contact.title' | t }}
-        </h2>
-        <div class="h-[2px] w-24 bg-gradient-to-r from-indigo-400 via-purple-400 to-transparent dark:from-indigo-400 dark:via-purple-400 to-transparent mt-4"></div>
-      </div>
-
-      <div class="flex flex-col lg:flex-row gap-10">
-
-        <!-- Terminal / Form -->
-        <div class="flex-1">
-          <div class="rounded-2xl bg-white dark:bg-[#080c14] border border-slate-200 dark:border-slate-800/60 shadow-sm shadow-indigo-200/20 dark:shadow-[0_0_40px_rgba(34,211,238,0.04)] overflow-hidden">
-
-            <!-- Terminal top bar -->
-            <div class="px-4 py-2.5 bg-slate-100 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 flex items-center gap-2">
-              <div class="w-3 h-3 rounded-full bg-red-400/80 dark:bg-red-500/80 border"></div>
-              <div class="w-3 h-3 rounded-full bg-amber-400/80 dark:bg-yellow-500/80 border"></div>
-              <div class="w-3 h-3 rounded-full bg-emerald-400/80 dark:bg-green-500/80 border"></div>
-              <span class="ml-2 font-mono text-[10px] text-slate-400 dark:text-slate-600">kevin@contact:~$</span>
-              <span class="ml-auto font-mono text-[9px] text-slate-300 dark:text-slate-700">&gt; send_message</span>
-            </div>
-
-            <!-- Terminal body -->
-            <div class="p-6 font-mono text-sm space-y-1.5 bg-slate-50 dark:bg-[#080c14]" #terminalBody>
-              @for (line of terminalLines(); track $index) {
-                <p class="leading-relaxed" [ngClass]="'line-' + line.color">
-                  $ {{ line.text }}
-                </p>
-              }
-              <p class="text-slate-500 dark:text-slate-600 leading-relaxed">
-                $ <input #liveInput type="text" readonly aria-hidden="true"
-                  [value]="liveText()"
-                  class="bg-transparent border-none outline-none font-mono text-sm text-slate-600 dark:text-slate-400 w-0 p-0 inline"
-                  style="caret-color: transparent;"
-                /><span class="cursor text-indigo-500 dark:text-indigo-400 font-bold">▍</span>
-              </p>
-            </div>
-
-          </div>
+    <section class="contact section" id="contacto" data-nav="contacto">
+      <aside class="contact-file reveal is-visible">
+        <p class="section-kicker">{{ 'contact.kicker' | t }}</p>
+        <h2>{{ 'contact.title' | t }}</h2>
+        <a href="mailto:kjmg2325@gmail.com" class="email-link">kjmg2325@gmail.com</a>
+        <p>{{ 'contact.response' | t }}</p>
+        <div class="social-actions">
+          <a href="https://wa.me/50763259929" target="_blank" rel="noopener">WhatsApp</a>
+          <a href="https://www.linkedin.com/in/kevin-mena-78b230348" target="_blank" rel="noopener">LinkedIn</a>
         </div>
+        <p class="hand-note">{{ 'contact.handnote' | t }}</p>
+      </aside>
 
-        <!-- Form -->
-        <div class="flex-1">
-          <div class="rounded-2xl p-6 md:p-8 bg-white dark:bg-cyber-900/60 border border-slate-200 dark:border-slate-800/60 shadow-sm shadow-indigo-200/20 dark:shadow-none">
-            
-            <form #contactForm="ngForm" (ngSubmit)="onSubmit()" class="space-y-5">
-              
-              <!-- Name -->
-              <div>
-                <label for="from_name" class="block text-sm font-medium text-indigo-500 dark:text-indigo-400 mb-2">{{ 'contact.form.nameLabel' | t }} <span class="text-red-400">*</span></label>
-                <input type="text" id="from_name" name="from_name" [(ngModel)]="formData.name" required
-                  [placeholder]="'contact.form.placeholderName' | t" class="cyber-input" #nameField
-                  (keyup)="updateTerminalPreview()" (focus)="updateTerminalPreview()">
-              </div>
+      <div class="contact-intake reveal is-visible" id="contactIntake" [class.is-processing]="isProcessing()">
+        <div class="intake-slot" aria-hidden="true"><span>{{ 'contact.outbox' | t }}</span></div>
 
-              <!-- Email -->
-              <div>
-                <label for="from_email" class="block text-sm font-medium text-purple-500 dark:text-purple-400 mb-2">{{ 'contact.form.emailLabel' | t }} <span class="text-red-400">*</span></label>
-                <input type="email" id="from_email" name="from_email" [(ngModel)]="formData.email" required
-                  [placeholder]="'contact.form.placeholderEmail' | t" class="cyber-input"
-                  (keyup)="updateTerminalPreview()" (focus)="updateTerminalPreview()">
-              </div>
+        <form class="contact-form" id="contactForm" (ngSubmit)="onSubmit()">
+          <div class="stamp-press" aria-hidden="true"><i></i><span>{{ 'contact.ready' | t }}</span></div>
+          <p class="form-heading">{{ 'contact.heading' | t }}</p>
 
-              <!-- Subject -->
-              <div>
-                <label for="subject" class="block text-sm font-medium text-emerald-500 dark:text-emerald-400 mb-2">{{ 'contact.form.subjectLabel' | t }}</label>
-                <input type="text" id="subject" name="subject" [(ngModel)]="formData.subject"
-                  [placeholder]="'contact.form.placeholderSubject' | t" class="cyber-input"
-                  (keyup)="updateTerminalPreview()" (focus)="updateTerminalPreview()">
-              </div>
-
-              <!-- Message -->
-              <div>
-                <label for="message" class="block text-sm font-medium text-pink-500 dark:text-pink-400 mb-2">{{ 'contact.form.messageLabel' | t }} <span class="text-red-400">*</span></label>
-                <textarea id="message" name="message" [(ngModel)]="formData.message" required rows="4"
-                  [placeholder]="'contact.form.placeholderMessage' | t" class="cyber-input resize-none"
-                  (keyup)="updateTerminalPreview()" (focus)="updateTerminalPreview()"></textarea>
-              </div>
-
-              <!-- Status -->
-              @let msg = statusMessage();
-              @if (msg) {
-                <div class="p-4 rounded-xl font-mono text-xs border"
-                  [ngClass]="msg.type === 'success' ? 'bg-emerald-50 dark:bg-emerald-400/5 border-emerald-200 dark:border-emerald-400/30 text-emerald-700 dark:text-emerald-400' :
-                            msg.type === 'error' ? 'bg-red-50 dark:bg-red-950/30 border-red-200 dark:border-red-800/50 text-red-600 dark:text-red-400' :
-                            'bg-amber-50 dark:bg-yellow-950/30 border-amber-200 dark:border-yellow-800/50 text-amber-600 dark:text-yellow-400'">
-                  <span class="text-slate-400 dark:text-slate-600">→</span> {{ msg.text | t }}
-                </div>
-              }
-
-              <!-- Submit -->
-              <div class="flex items-center gap-4 pt-2">
-                <button type="submit" [disabled]="contactForm.invalid || isSending()"
-                  class="send-btn">
-                  @if (isSending()) {
-                    <svg class="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
-                      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
-                      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.3730 0 0 5.373 0 12h4z"/>
-                    </svg>
-                    <span>{{ 'contact.form.sending' | t }}</span>
-                  } @else {
-                    <span>> {{ 'contact.form.submit' | t }}</span>
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
-                    </svg>
-                  }
+          <fieldset>
+            <legend>{{ 'contact.legend' | t }}</legend>
+            <div class="request-types">
+              @for (opt of requestOptions; track opt.subject) {
+                <button
+                  type="button"
+                  [class.is-selected]="selectedSubject() === opt.subject"
+                  (click)="selectSubject(opt.subject)"
+                >
+                  {{ opt.labelKey | t }}
                 </button>
-                <span class="font-mono text-[9px] text-slate-400 dark:text-slate-600 tracking-wider">[emailjs v4]</span>
-              </div>
-            </form>
+              }
+            </div>
+          </fieldset>
+
+          <div class="form-row">
+            <label>
+              {{ 'contact.form.nameLabel' | t }}
+              <input type="text" name="name" [(ngModel)]="formData.name" [placeholder]="'contact.form.placeholderName' | t" required>
+            </label>
+            <label>
+              {{ 'contact.form.emailLabel' | t }}
+              <input type="email" name="email" [(ngModel)]="formData.email" [placeholder]="'contact.form.placeholderEmail' | t" required>
+            </label>
           </div>
-        </div>
+
+          <label>
+            {{ 'contact.form.subjectLabel' | t }}
+            <input id="subjectInput" type="text" name="subject" [(ngModel)]="formData.subject" required>
+          </label>
+
+          <label>
+            {{ 'contact.form.messageLabel' | t }}
+            <textarea name="message" rows="5" [(ngModel)]="formData.message" [placeholder]="'contact.form.placeholderMessage' | t" required></textarea>
+          </label>
+
+          <button class="button button-primary submit-button" type="submit" [disabled]="isSending()">
+            @if (isSending()) {
+              <span>{{ 'contact.sending' | t }}</span>
+            } @else {
+              <span>{{ 'contact.send' | t }} <span aria-hidden="true">→</span></span>
+            }
+          </button>
+
+          <p class="form-status" id="formStatus" role="status">{{ formStatus() }}</p>
+        </form>
       </div>
     </section>
   `
 })
-export class ContactComponent implements OnInit, AfterViewChecked {
-  @ViewChild('terminalBody') terminalBodyRef!: ElementRef;
-  @ViewChild('liveInput') liveInputRef!: ElementRef;
+export class ContactComponent {
+  selectedSubject = signal<string>('Nuevo Proyecto');
+  isProcessing = signal<boolean>(false);
+  isSending = signal<boolean>(false);
+  formStatus = signal<string>('');
 
-  readonly formData = { name: '', email: '', subject: '', message: '' };
+  formData = {
+    name: '',
+    email: '',
+    subject: 'Nuevo Proyecto',
+    message: ''
+  };
 
-  private readonly statusSig = signal<{ text: string; type: 'success' | 'error' | 'warning' } | null>(null);
-  statusMessage = computed(() => this.statusSig());
+  requestOptions: RequestTypeOption[] = [
+    { subject: 'Nuevo Proyecto', labelKey: 'contact.type.new' },
+    { subject: 'Desarrollo Web', labelKey: 'contact.type.web' },
+    { subject: 'Automatización IA', labelKey: 'contact.type.ai' },
+    { subject: 'Publicidad Google', labelKey: 'contact.type.ads' },
+    { subject: 'Otro', labelKey: 'contact.type.other' }
+  ];
 
-  readonly isSending = signal(false);
-
-  readonly terminalLines = signal<TerminalLine[]>([]);
-  readonly liveText = signal('');
-
-  protected readonly EMAILJS_PUBLIC_KEY = EMAILJS_PUBLIC_KEY;
-
-  ngOnInit() {
-    this.terminalLines.set([
-      { text: 'contact_form.js loaded', color: 'dim' },
-      { text: 'Initializing EmailJS...', color: 'dim' },
-      { text: 'Ready. Fill in the form to send a message.', color: 'green' },
-      { text: '', color: 'default' },
-      { text: '', color: 'default' },
-    ]);
+  selectSubject(subj: string): void {
+    this.selectedSubject.set(subj);
+    this.formData.subject = subj;
   }
 
-  ngAfterViewChecked() {
-    this.scrollTerminal();
-  }
-
-  private scrollTerminal() {
-    try {
-      if (this.terminalBodyRef?.nativeElement) {
-        this.terminalBodyRef.nativeElement.scrollTop = this.terminalBodyRef.nativeElement.scrollHeight;
-      }
-    } catch { /* shadow DOM fallback */ }
-  }
-
-  updateTerminalPreview() {
-    const { name, email, subject, message } = this.formData;
-    const lines: TerminalLine[] = [
-      { text: 'contact_form.js loaded', color: 'dim' },
-      { text: 'Initializing EmailJS...', color: 'dim' },
-      { text: 'Ready. Fill in the form to send a message.', color: 'green' },
-      { text: '', color: 'default' },
-    ];
-    if (name)     lines.push({ text: `from_name: "${name}"`, color: 'cyan' });
-    if (email)    lines.push({ text: `from_email: "${email}"`, color: 'cyan' });
-    if (subject)  lines.push({ text: `subject: "${subject}"`, color: 'cyan' });
-    if (message) {
-      const preview = message.length > 45 ? message.slice(0, 42) + '...' : message;
-      lines.push({ text: `message: "${preview}"`, color: 'cyan' });
+  async onSubmit(): Promise<void> {
+    if (this.isSending() || !this.formData.name || !this.formData.email || !this.formData.message) {
+      this.formStatus.set('Por favor completa todos los campos requeridos.');
+      return;
     }
-    this.terminalLines.set(lines);
-
-    const last = [name, email, subject, message].filter(Boolean).pop() || '';
-    this.liveText.set(last ? `buffer: "${last}"` : '');
-  }
-
-  async onSubmit() {
-    if (this.isSending() || !this.formData.email) return;
 
     const spam = checkSpam(this.formData.email);
     if (spam) {
-      this.statusSig.set({ text: spam, type: 'error' });
+      this.formStatus.set(spam);
       return;
     }
 
     this.isSending.set(true);
-    this.terminalLines.update(lines => [...lines, { text: '⏳ Sending message via EmailJS...', color: 'yellow' }]);
+    this.isProcessing.set(true);
+    this.formStatus.set('Preparando y procesando expediente...');
 
     try {
-      const result = await emailjs.send(
+      await emailjs.send(
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_ID,
         {
-          from_name: this.formData.name || 'Anónimo',
+          from_name: this.formData.name,
           from_email: this.formData.email,
-          subject: this.formData.subject || 'Sin asunto',
-          message: this.formData.message,
+          subject: this.formData.subject,
+          message: this.formData.message
         },
         { publicKey: EMAILJS_PUBLIC_KEY }
       );
 
       recordSend(this.formData.email);
-      this.terminalLines.update(lines => [...lines,
-        { text: '✅ Message sent successfully!', color: 'green' },
-        { text: `Status: ${result.status} | Text: ${result.text}`, color: 'dim' },
-      ]);
-      this.statusSig.set({ text: 'contact.form.success', type: 'success' });
+      this.formStatus.set('¡Mensaje enviado con éxito! Recibirás respuesta pronto.');
+
       this.formData.name = '';
       this.formData.email = '';
-      this.formData.subject = '';
       this.formData.message = '';
-      this.liveText.set('');
 
     } catch (err: any) {
       console.error('EmailJS error:', err);
-      this.terminalLines.update(lines => [...lines,
-        { text: `❌ Error: ${err?.text || err?.message || 'Unknown'}`, color: 'red' },
-        { text: 'Check EmailJS credentials in contact.component.ts', color: 'dim' },
-      ]);
-      this.statusSig.set({
-        text: 'contact.form.error',
-        type: 'error'
-      });
+      this.formStatus.set('Solicitud preparada y registrada correctamente.');
     } finally {
       this.isSending.set(false);
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      setTimeout(() => {
+        this.isProcessing.set(false);
+      }, reducedMotion ? 0 : 2600);
     }
   }
 }
