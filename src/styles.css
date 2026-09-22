@@ -923,6 +923,17 @@ body.dark .cabinet-instruction strong, html.dark .cabinet-instruction strong, .d
 }
 .drawer-face > small { color: #e3dbc6; font: .68rem/1.35 var(--mono); justify-self: center; }
 
+.cabinet-drawer:not(.is-open) .manila-folder,
+.cabinet-drawer:not(.is-open) .folder-paper,
+.cabinet-drawer:not(.is-open) .folder-front,
+.cabinet-drawer:not(.is-open) .folder-back {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transform: none !important;
+  pointer-events: none !important;
+}
+
 .manila-folder {
   position: absolute;
   z-index: 4;
@@ -931,50 +942,55 @@ body.dark .cabinet-instruction strong, html.dark .cabinet-instruction strong, .d
   top: 8px;
   height: 155px;
   opacity: 0;
-  transform: translateY(82px) translateZ(-14px) rotateX(-24deg) scale(.88);
+  visibility: hidden;
+  display: none;
   transform-origin: bottom;
   transform-style: preserve-3d;
   pointer-events: none;
-  transition: opacity .2s .18s ease, transform .62s .22s cubic-bezier(.16,.86,.24,1.12);
 }
 .cabinet-drawer.is-open .manila-folder {
+  display: block;
   opacity: 1;
-  transform: translateY(-105px) translateZ(18px) rotateX(0) scale(1);
+  visibility: visible;
+  animation: folderRise 0.52s 0.12s cubic-bezier(.16,.86,.24,1.12) both;
 }
 .folder-back, .folder-front, .folder-paper { position: absolute; left: 0; right: 0; bottom: 0; border: 1px solid #a99664; }
 .folder-back {
   height: 100%;
   background: #d4c28d;
-  clip-path: polygon(0 18%, 9% 18%, 13% 0, 48% 0, 53% 18%, 100% 18%, 100% 100%, 0 100%);
+  clip-path: polygon(0 26px, 10% 26px, 14% 0, 50% 0, 54% 26px, 100% 26px, 100% 100%, 0 100%);
   box-shadow: 0 -5px 12px rgba(0,0,0,.1);
 }
 .folder-back i {
   position: absolute;
-  top: 9px;
-  left: 18%;
-  color: #62563a;
-  font: 600 .58rem var(--mono);
+  top: 5px;
+  left: 16%;
+  color: #44351a;
+  font: 700 .62rem var(--mono);
   font-style: normal;
+  letter-spacing: .08em;
+  z-index: 5;
 }
 .folder-paper {
   z-index: 2;
-  left: 8%;
-  right: 8%;
-  height: 80%;
-  padding: 18px 16px;
+  left: 6%;
+  right: 6%;
+  top: 32px;
+  bottom: 10px;
+  height: auto;
+  padding: 14px 14px 10px;
   background: #fffdf7;
   color: #102a35;
   text-align: left;
-  box-shadow: 0 -4px 8px rgba(0,0,0,.15);
-  transform: translateY(48px);
+  box-shadow: 0 2px 8px rgba(0,0,0,.12);
+  border-radius: 2px;
   opacity: 0;
-  transition: transform .55s .72s cubic-bezier(.2,.8,.2,1), opacity .25s .7s ease;
   overflow: hidden;
 }
 .folder-paper::before {
   content: "";
   position: absolute;
-  inset: 8px;
+  inset: 6px;
   border: 1px solid #ded7c4;
   pointer-events: none;
 }
@@ -988,19 +1004,24 @@ body.dark .cabinet-instruction strong, html.dark .cabinet-instruction strong, .d
   text-overflow: ellipsis;
 }
 .folder-paper small {
-  margin-top: 6px;
+  margin-top: 5px;
   color: var(--coral);
   font: 600 .55rem var(--mono);
   text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-.cabinet-drawer.is-open .folder-paper { transform: translateY(-42px); opacity: 1; }
+.cabinet-drawer.is-open .folder-paper {
+  opacity: 1;
+  animation: paperRise 0.45s 0.25s cubic-bezier(.2,.8,.2,1) both;
+}
 .folder-front {
   z-index: 3;
   height: 72%;
   background: #dfcc95;
   box-shadow: inset 0 1px rgba(255,255,255,.28), 0 -3px 7px rgba(0,0,0,.08);
   transform-origin: bottom center;
-  transition: transform .65s .48s cubic-bezier(.2,.75,.2,1), filter .45s .48s ease;
   backface-visibility: hidden;
 }
 .folder-front::after {
@@ -1010,8 +1031,40 @@ body.dark .cabinet-instruction strong, html.dark .cabinet-instruction strong, .d
   border: 1px solid rgba(105,87,46,.2);
 }
 .cabinet-drawer.is-open .folder-front {
-  transform: perspective(600px) rotateX(-154deg) translateY(12px);
-  filter: brightness(.9);
+  animation: folderFrontOpen 0.58s 0.22s cubic-bezier(.2,.75,.2,1) both;
+}
+
+@keyframes folderRise {
+  0% {
+    opacity: 0;
+    transform: translateY(8px) translateZ(-14px) rotateX(-15deg) scale(.88);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(-105px) translateZ(18px) rotateX(0) scale(1);
+  }
+}
+
+@keyframes paperRise {
+  0% {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes folderFrontOpen {
+  0% {
+    transform: perspective(600px) rotateX(0deg) translateY(0);
+    filter: brightness(1);
+  }
+  100% {
+    transform: perspective(600px) rotateX(-154deg) translateY(12px);
+    filter: brightness(.9);
+  }
 }
 .cabinet-base {
   position: absolute;
@@ -2032,8 +2085,48 @@ footer {
   .drawer-label span { padding: 0 5px; font-size: 0.58rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .drawer-face > small { font-size: 0.58rem; }
   .cabinet-drawer.is-open { transform: translateZ(45px) translateY(2px); }
-  .cabinet-drawer.is-open .manila-folder { transform: translateY(-58px) translateZ(8px) rotateX(0) scale(.95); }
-  .cabinet-drawer.is-open .folder-paper { transform: translateY(-30px); }
+  .cabinet-drawer.is-open .manila-folder {
+    animation: folderRiseMobile 0.48s 0.1s cubic-bezier(.16,.86,.24,1.12) both;
+  }
+  .cabinet-drawer.is-open .folder-paper {
+    animation: paperRiseMobile 0.42s 0.22s cubic-bezier(.2,.8,.2,1) both;
+  }
+  .folder-paper {
+    top: 30px;
+    bottom: 8px;
+    left: 5%;
+    right: 5%;
+    padding: 10px 10px 8px;
+  }
+  .folder-paper b {
+    font-size: 0.72rem;
+  }
+  .folder-paper small {
+    font-size: 0.5rem;
+    margin-top: 3px;
+  }
+
+  @keyframes folderRiseMobile {
+    0% {
+      opacity: 0;
+      transform: translateY(8px) translateZ(0) scale(.92);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(-58px) translateZ(8px) rotateX(0) scale(.95);
+    }
+  }
+
+  @keyframes paperRiseMobile {
+    0% {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
   .project-dossier { min-height: auto; width: 100%; max-width: 100%; box-sizing: border-box; margin-top: 14px; overflow: hidden; }
   .dossier-empty {
     max-width: 100%;

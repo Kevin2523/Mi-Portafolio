@@ -55,14 +55,16 @@ export interface CabinetProject {
                   (click)="toggleDrawer(item.id)"
                 >
                   <span class="drawer-depth" aria-hidden="true"></span>
-                  <span class="manila-folder" aria-hidden="true">
-                    <span class="folder-back"><i>EXP. 0{{ idx + 1 }}</i></span>
-                    <span class="folder-paper">
-                      <b>{{ item.titleKey | t }}</b>
-                      <small>{{ item.subtitleKey | t }}</small>
+                  @if (activeProjectId() === item.id) {
+                    <span class="manila-folder" aria-hidden="true">
+                      <span class="folder-back"><i>EXP. 0{{ idx + 1 }}</i></span>
+                      <span class="folder-paper">
+                        <b>{{ item.titleKey | t }}</b>
+                        <small>{{ item.subtitleKey | t }}</small>
+                      </span>
+                      <span class="folder-front"></span>
                     </span>
-                    <span class="folder-front"></span>
-                  </span>
+                  }
                   <span class="drawer-face">
                     <i class="drawer-handle" aria-hidden="true"></i>
                     <span class="drawer-label">
