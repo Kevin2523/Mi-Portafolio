@@ -44,6 +44,9 @@ body.dark, html.dark body, html.dark, .dark {
   --muted: #1e4553;
 }
 
+/* Route views replace the former single long landing page. */
+.page-view { min-height: calc(100vh - var(--header)); min-height: calc(100dvh - var(--header)); padding-top: 0; }
+
 button, input, textarea { font: inherit; }
 button, a { -webkit-tap-highlight-color: transparent; }
 a { color: inherit; }
@@ -256,7 +259,7 @@ body.dark .lang-pill-btn.is-active, html.dark .lang-pill-btn.is-active, .dark .l
 .section {
   width: min(1200px, calc(100% - 40px));
   margin: 0 auto;
-  padding: clamp(80px, 10vw, 144px) 0;
+  padding: 24px 0 72px;
   scroll-margin-top: 70px;
 }
 .section-kicker, .archive-label, .document-code, .form-heading {
@@ -2030,7 +2033,7 @@ footer {
     padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)) !important;
   }
 
-  .section { width: min(100% - 24px, 1200px); padding: clamp(48px, 8vw, 84px) 0; box-sizing: border-box; }
+  .section { width: min(100% - 24px, 1200px); padding: 24px 0 56px; box-sizing: border-box; }
   .section-heading { flex-direction: column; align-items: flex-start; gap: 12px; margin-bottom: 32px; }
   .section-heading h2 { font-size: clamp(2.2rem, 7vw, 3.6rem); word-break: break-word; }
 
@@ -2512,7 +2515,7 @@ footer {
 }
 
 @media (max-width: 480px) {
-  .section { width: calc(100% - 24px); padding: 36px 0; }
+  .section { width: calc(100% - 24px); padding: 24px 0 48px; }
   .dark-section, .projects {
     padding-left: 16px !important;
     padding-right: 16px !important;
@@ -2539,6 +2542,15 @@ footer {
 
   .social-actions { flex-direction: column; width: 100%; }
   .social-actions a { text-align: center; width: 100%; }
+}
+
+@media (max-width: 1080px) {
+  .experience.dark-section { display:block !important; min-height:calc(100vh - var(--header)); }
+  .experience .hanging-files { display:grid !important; visibility:visible !important; }
+  .experience.dark-section, .experience .hanging-files, .timeline.hanging-files article { max-width:100%; min-width:0; overflow-x:hidden; }
+  .timeline.hanging-files article h3, .timeline.hanging-files article p { max-width:100%; overflow-wrap:anywhere; word-break:normal; }
+  .mobile-bottom-nav { width:min(calc(100% - 16px), 390px); padding:0 5px; }
+  .bottom-nav-item { width:40px; height:40px; flex:0 0 40px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

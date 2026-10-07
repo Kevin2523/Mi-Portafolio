@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BentoComponent } from '../bento/bento.component';
+import { HeroComponent } from '../hero/hero.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, BentoComponent],
+  imports: [CommonModule, HeroComponent],
   template: `
-    <app-bento></app-bento>
+    <app-hero></app-hero>
   `
 })
 export class HomeComponent {}

@@ -2,11 +2,12 @@ import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CvDownloadComponent } from '../../shared/components/cv-download/cv-download.component';
 import { TranslatePipe } from '../../core/i18n/translate.pipe';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-hero',
   standalone: true,
-  imports: [CommonModule, CvDownloadComponent, TranslatePipe],
+  imports: [CommonModule, CvDownloadComponent, TranslatePipe, RouterLink],
   template: `
     <section class="hero section" id="inicio" data-nav="inicio">
       <div class="hero-copy reveal is-visible" [class.is-dimmed]="binderOpen()" (click)="binderOpen() ? toggleBinder() : null">
@@ -18,7 +19,7 @@ import { TranslatePipe } from '../../core/i18n/translate.pipe';
         <p>{{ 'hero.bio1' | t }}</p>
         <p>{{ 'hero.bio2' | t }}</p>
         <div class="hero-actions">
-          <a class="button button-primary" href="#contacto">{{ 'hero.btn.contact' | t }} <span aria-hidden="true">→</span></a>
+          <a class="button button-primary" routerLink="/contacto">{{ 'hero.btn.contact' | t }} <span aria-hidden="true">→</span></a>
           <app-cv-download></app-cv-download>
         </div>
         <p class="hand-note">{{ 'hero.handnote' | t }}</p>

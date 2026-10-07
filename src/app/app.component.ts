@@ -1,5 +1,5 @@
 import { Component, HostListener, OnInit, inject, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { UiStateService } from './core/services/ui-state.service';
 import { SkipLinkComponent } from './core/services/skip-link.component';
@@ -9,7 +9,7 @@ import { TranslatePipe } from './core/i18n/translate.pipe';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, SkipLinkComponent, LanguageSwitcherComponent, TranslatePipe],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, CommonModule, SkipLinkComponent, LanguageSwitcherComponent, TranslatePipe],
   template: `
     <div [class.dark]="uiState.isDarkMode()">
       <app-skip-link></app-skip-link>
@@ -19,21 +19,19 @@ import { TranslatePipe } from './core/i18n/translate.pipe';
       </div>
 
       <header class="site-header" id="siteHeader" [class.is-compact]="isCompact()">
-        <a class="brand" href="#inicio" aria-label="Kevin Mena, ir al inicio">
+        <a class="brand" routerLink="/" aria-label="Kevin Mena, ir al inicio">
           <span class="brand-mark" aria-hidden="true">KM</span>
           <span>Kevin Mena</span>
         </a>
 
         <!-- Desktop Navigation -->
         <nav class="main-nav" id="mainNav" aria-label="Navegación principal">
-          <a href="#inicio" [class.is-active]="activeSection() === 'inicio'" (click)="navigateTo('inicio')">{{ 'header.nav.home' | t }}</a>
-          <a href="#sobre-mi" [class.is-active]="activeSection() === 'sobre-mi'" (click)="navigateTo('sobre-mi')">{{ 'header.nav.about' | t }}</a>
-          <a href="#proyectos" [class.is-active]="activeSection() === 'proyectos'" (click)="navigateTo('proyectos')">{{ 'header.nav.projects' | t }}</a>
-          <a href="#servicios" [class.is-active]="activeSection() === 'servicios'" (click)="navigateTo('servicios')">{{ 'header.nav.services' | t }}</a>
-          <a href="#proceso" [class.is-active]="activeSection() === 'proceso'" (click)="navigateTo('proceso')">{{ 'header.nav.process' | t }}</a>
-          <a href="#experiencia" [class.is-active]="activeSection() === 'experiencia'" (click)="navigateTo('experiencia')">{{ 'header.nav.experience' | t }}</a>
-          <a href="#habilidades" [class.is-active]="activeSection() === 'habilidades'" (click)="navigateTo('habilidades')">{{ 'header.nav.skills' | t }}</a>
-          <a href="#contacto" [class.is-active]="activeSection() === 'contacto'" (click)="navigateTo('contacto')">{{ 'header.nav.contact' | t }}</a>
+          <a routerLink="/" routerLinkActive="is-active" [routerLinkActiveOptions]="{ exact: true }">{{ 'header.nav.home' | t }}</a>
+          <a routerLink="/proyectos" routerLinkActive="is-active">{{ 'header.nav.projects' | t }}</a>
+          <a routerLink="/servicios" routerLinkActive="is-active">{{ 'header.nav.services' | t }}</a>
+          <a routerLink="/experiencia" routerLinkActive="is-active">{{ 'header.nav.experience' | t }}</a>
+          <a routerLink="/habilidades" routerLinkActive="is-active">{{ 'header.nav.skills' | t }}</a>
+          <a routerLink="/contacto" routerLinkActive="is-active">{{ 'header.nav.contact' | t }}</a>
         </nav>
 
         <div class="header-actions">
@@ -61,8 +59,9 @@ import { TranslatePipe } from './core/i18n/translate.pipe';
         <button
           type="button"
           class="bottom-nav-item"
-          [class.is-active]="isSectionActive('inicio')"
-          (click)="navigateTo('inicio')"
+          routerLink="/"
+          routerLinkActive="is-active"
+          [routerLinkActiveOptions]="{ exact: true }"
           [attr.aria-label]="'header.nav.home' | t"
         >
           <svg viewBox="0 0 24 24" width="22" height="22" [attr.fill]="isSectionActive('inicio') ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -73,8 +72,8 @@ import { TranslatePipe } from './core/i18n/translate.pipe';
         <button
           type="button"
           class="bottom-nav-item"
-          [class.is-active]="isSectionActive('proyectos')"
-          (click)="navigateTo('proyectos')"
+          routerLink="/proyectos"
+          routerLinkActive="is-active"
           [attr.aria-label]="'header.nav.projects' | t"
         >
           <svg viewBox="0 0 24 24" width="22" height="22" [attr.fill]="isSectionActive('proyectos') ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -88,8 +87,8 @@ import { TranslatePipe } from './core/i18n/translate.pipe';
         <button
           type="button"
           class="bottom-nav-item"
-          [class.is-active]="isSectionActive('servicios')"
-          (click)="navigateTo('servicios')"
+          routerLink="/servicios"
+          routerLinkActive="is-active"
           [attr.aria-label]="'header.nav.services' | t"
         >
           <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -99,11 +98,19 @@ import { TranslatePipe } from './core/i18n/translate.pipe';
           </svg>
         </button>
 
+        <button type="button" class="bottom-nav-item" routerLink="/experiencia" routerLinkActive="is-active" aria-label="Experiencia">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 20V10m8 10V4m8 16v-7"/><circle cx="4" cy="8" r="2"/><circle cx="12" cy="2" r="2"/><circle cx="20" cy="11" r="2"/></svg>
+        </button>
+
+        <button type="button" class="bottom-nav-item" routerLink="/habilidades" routerLinkActive="is-active" aria-label="Habilidades">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 4h14M5 10h14M5 16h14M5 22h14"/></svg>
+        </button>
+
         <button
           type="button"
           class="bottom-nav-item"
-          [class.is-active]="isSectionActive('contacto')"
-          (click)="navigateTo('contacto')"
+          routerLink="/contacto"
+          routerLinkActive="is-active"
           [attr.aria-label]="'header.nav.contact' | t"
         >
           <svg viewBox="0 0 24 24" width="22" height="22" [attr.fill]="isSectionActive('contacto') ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -113,17 +120,6 @@ import { TranslatePipe } from './core/i18n/translate.pipe';
           <span class="nav-badge-dot" aria-hidden="true"></span>
         </button>
 
-        <button
-          type="button"
-          class="bottom-nav-item nav-item-profile"
-          [class.is-active]="isSectionActive('sobre-mi')"
-          (click)="navigateTo('sobre-mi')"
-          [attr.aria-label]="'header.nav.about' | t"
-        >
-          <span class="nav-story-ring" [class.is-active]="isSectionActive('sobre-mi')">
-            <span class="nav-avatar-inner">KM</span>
-          </span>
-        </button>
       </nav>
 
       <footer>
